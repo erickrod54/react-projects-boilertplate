@@ -12,7 +12,7 @@ const List = () => {
   const removeItem = (id) =>{
     const newPeople = 
       people.filter((person) => person.id !== id)
-    
+
       setPeople(newPeople)
 } 
 
