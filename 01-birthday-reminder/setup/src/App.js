@@ -22,6 +22,7 @@ function App() {
           {/** issue with 'people.length' does not update :(
           */}
           <h3>{people.length} birthdays today</h3>
+          {console.log('people length',people.length)}
           {/** i have a component called 'List'
            * that has the JSX, and where the 'people'
            * data is destructured
