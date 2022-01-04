@@ -1,5 +1,6 @@
 import React from 'react';
 
+/**this is the loading component */
 const Loading = () => {
   return (
     <div className="loading">
