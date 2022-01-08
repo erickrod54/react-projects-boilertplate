@@ -186,6 +186,12 @@ main {
   border-radius: 50%;
   position: relative;
 }
+/** the 'icon' className*/
+.icon{
+  font-size: 5rem;
+  color: red;
+}
+
 .quote-icon {
   position: absolute;
   top: 0;
