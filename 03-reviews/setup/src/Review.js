@@ -4,8 +4,8 @@ import { FaChevronLeft, FaChevronRight, FaQuoteRight } from 'react-icons/fa';
 
 const Review = () => {
 
-  /**Reviews App version 1 - building states, 
-   * destructuring data, and styling */
+  /**Reviews App version 2 - Prev and Next 
+   * feature */
 
   /**Here i build the state to 'index' management
    * for the profiles in the array*/
@@ -16,8 +16,39 @@ const Review = () => {
   const { name, job, image, text } = people[index]
 
   console.log(people)
+
+  /**'checkNumber' will check 'newIndex' 
+   * to make a continous flow in index number
+  */
+  const checkNumber = (number) => {
+    /**case for the last item 'people' array */
+    if (number > people.length - 1) {
+      return 0;
+    }
+    /**case for item is less than 0 will 
+     * return last element in 'people' array */
+    if (number < 0) {
+      return people.length - 1;
+    }
+    /**in any other case will return number for
+     * 'newIndex'
+     */
+    return number
+  }
    
-  
+  const nextProfile = () => {
+    setIndex((index) => {
+      const newIndex = index + 1;
+      return checkNumber(newIndex);
+    })
+  }
+
+  const prevProfile = () => {
+    setIndex((index) => {
+      const newIndex = index - 1;
+      return checkNumber(newIndex);
+    })
+  }
   return (
 /**the styles applied are:
  *  
@@ -54,10 +85,10 @@ const Review = () => {
     <p className='job'>{job}</p>
     <p className='info'>{text}</p>
       <div className='button-container'>
-        <button className='prev-btn'>
+        <button className='prev-btn' onClick={prevProfile}>
           <FaChevronLeft />
         </button>
-        <button className='prev-btn'>
+        <button className='next-btn' onClick={nextProfile}>
           <FaChevronRight />
         </button>
       </div>
