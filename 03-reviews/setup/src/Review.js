@@ -4,8 +4,12 @@ import { FaChevronLeft, FaChevronRight, FaQuoteRight } from 'react-icons/fa';
 
 const Review = () => {
 
-  /**Reviews App version 2 - Prev and Next 
-   * feature */
+  /**Reviews App version 3 - Features added:
+   * 
+   * Prev and Next feature
+   * RandomProfile
+   * 
+   *  */
 
   /**Here i build the state to 'index' management
    * for the profiles in the array*/
@@ -49,6 +53,28 @@ const Review = () => {
       return checkNumber(newIndex);
     })
   }
+
+  const randomProfile = () => {
+    /**floor gives an integer number, if i use
+     * only random gives a unique float number
+     */
+     let randomNumber = Math.floor(
+          Math.random() * people.length);
+    /**Math.random is used to generate a random number
+     * and i multiply to 'people.length' to get the 
+     * range between my random number is gonna move,
+     * -this case the 'length' of my 'people' array-
+     */
+
+    /**this condition garantee a unique random number
+     * in order to avoid repetition
+     */
+    if (randomNumber === index) {
+      randomNumber = index + 1;
+    }
+    setIndex(checkNumber(randomNumber))
+  }
+
   return (
 /**the styles applied are:
  *  
@@ -92,7 +118,7 @@ const Review = () => {
           <FaChevronRight />
         </button>
       </div>
-          <button className='random-btn'>
+          <button className='random-btn' onClick={randomProfile}>
             surprise me
           </button>
   </article>
