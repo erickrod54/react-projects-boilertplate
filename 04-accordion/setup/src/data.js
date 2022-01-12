@@ -1,3 +1,7 @@
+
+/**Accordion version 1 - some data has been 
+ * modified
+ */
 const questions = [
   {
     id: 1,
@@ -29,5 +33,29 @@ const questions = [
     info:
       'Locavore franzen fashion axe live-edge neutra irony synth af tilde shabby chic man braid chillwave waistcoat copper mug messenger bag. Banjo snackwave blog, microdosing thundercats migas vaporware viral lo-fi seitan ',
   },
+  {
+    id: 6,
+    title: 'What is your email ?',
+    info:
+      'Locavore franzen fashion axe live-edge neutra irony synth af tilde shabby chic man braid chillwave waistcoat copper mug messenger bag. Banjo snackwave blog, microdosing thundercats migas vaporware viral lo-fi seitan ',
+  },
+  {
+    id: 7,
+    title: 'What are the last 4 digits of your phone number ?',
+    info:
+      'Locavore franzen fashion axe live-edge neutra irony synth af tilde shabby chic man braid chillwave waistcoat copper mug messenger bag. Banjo snackwave blog, microdosing thundercats migas vaporware viral lo-fi seitan ',
+  },
+  {
+    id: 8,
+    title: 'What is your current job ?',
+    info:
+      'Locavore franzen fashion axe live-edge neutra irony synth af tilde shabby chic man braid chillwave waistcoat copper mug messenger bag. Banjo snackwave blog, microdosing thundercats migas vaporware viral lo-fi seitan ',
+  },
+  {
+    id: 9,
+    title: 'How many pieces has the chess board ?',
+    info:
+      'Locavore franzen fashion axe live-edge neutra irony synth af tilde shabby chic man braid chillwave waistcoat copper mug messenger bag. Banjo snackwave blog, microdosing thundercats migas vaporware viral lo-fi seitan ',
+  }
 ]
 export default questions
