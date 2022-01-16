@@ -3,13 +3,33 @@ import Menu from './Menu';
 import Categories from './Categories';
 import items from './data';
 
-/**Menu App version 1, features:
+/**Menu App version 2, features: 
  *    
- *  building states - menuItems, setMenuItems -
- * ---i'll map the menuItems from 'Menu' component--
- * 
+ *  'Dynamic Approach' to generate menu 
+ *   categories -first part-
  *  
+ *   filtering by 'all' categories
+ *   - this specific filter still 
+ *    manual in this version--
+ * 
+ * ---the 'Dynamic Approach' has two parts --- 
+ * 
  */
+
+/**
+ * First i map items by item.category to show all 
+ * the categories (prompted categories 13)
+ * 
+ * Second i look for the unique values inside the 
+ * categories so i wrap the 'map' with a 'new Set'
+ * (prompted set must be 5)
+ * 
+ * ---new Set is ES6 and will show me unique values--
+ * 
+ */
+const allCategories = new Set(items.map((item) => item.category));
+console.log(allCategories)
+
 function App() {
 
   /**the state to managae the items */
@@ -18,10 +38,20 @@ function App() {
   /**the state to manage the categories */
   const [ categories, setCategories] = useState([]);
 
+  
   /**here i build the filterItems functionality
    * to filter by 'category' and by 'item'
    */
   const filterItems = (category) => {
+    
+    /**for a 'category' value of 'all' 
+     * i'll return all the items in the array
+    */
+    if (category === 'all') {
+      setMenuItems(items);
+      return;
+    }
+    
     const newItems = items.filter((item) => item.category
     === category)
   /**here using 'setMenuItems' state, i set the 'items'
