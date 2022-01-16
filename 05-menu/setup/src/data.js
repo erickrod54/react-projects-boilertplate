@@ -71,5 +71,37 @@ const menu = [
     img: './images/item-9.jpeg',
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: 'Filet mignon',
+    category: 'breakfast',
+    price: 15.99,
+    img: './images/item-10.jpeg',
+    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+  },
+  {
+    id: 11,
+    title: 'Pasta',
+    category: 'lunch',
+    price: 15.99,
+    img: './images/item-11.jpg',
+    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+  },
+  {
+    id: 12,
+    title: 'Chicken',
+    category: 'brunch',
+    price: 15.99,
+    img: './images/item-12.jpg',
+    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+  },
+  {
+    id: 13,
+    title: 'Hallaca',
+    category: 'Christmas food',
+    price: 15.99,
+    img: './images/item-13.jpg',
+    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+  }
 ];
 export default menu;
