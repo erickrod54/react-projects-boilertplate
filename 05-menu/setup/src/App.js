@@ -3,17 +3,17 @@ import Menu from './Menu';
 import Categories from './Categories';
 import items from './data';
 
-/**Menu App version 2, features: 
+/**Menu App version 3, features: 
  *    
  *  'Dynamic Approach' to generate menu 
- *   categories -first part-
+ *   categories -second part-
  *  
  *   filtering by 'all' categories
- *   - this specific filter still 
- *    manual in this version--
+ *   - this specific filter now is 
+ *     dynamic--
  * 
  * ---the 'Dynamic Approach' has two parts --- 
- * 
+ *          -this is the second part-
  */
 
 /**
@@ -26,8 +26,11 @@ import items from './data';
  * 
  * ---new Set is ES6 and will show me unique values--
  * 
+ * Third i include the 'category' 'all' in the new 
+ * Set
  */
-const allCategories = new Set(items.map((item) => item.category));
+const allCategories = ['all',
+... new Set(items.map((item) => item.category))];
 console.log(allCategories)
 
 function App() {
@@ -36,7 +39,10 @@ function App() {
   const [ menuItems, setMenuItems ] = useState(items);
 
   /**the state to manage the categories */
-  const [ categories, setCategories] = useState([]);
+
+  /**the new value for categories will be 
+   * 'allCategories' -dynamic approach- */
+  const [ categories, setCategories] = useState(allCategories);
 
   
   /**here i build the filterItems functionality
@@ -72,10 +78,10 @@ function App() {
       </div>
       {/**here i render Categories and Menu component*/}
 
-      {/**i pass filterItems as a prop to use it in
-       * 'Categories' component
+      {/**i pass categories and filterItems as a props
+       *  to use it in 'Categories' component
        */}
-        <Categories filterItems={filterItems} />
+        <Categories categories={categories} filterItems={filterItems} />
         <Menu items={menuItems}/>
     </section>
   </main>
