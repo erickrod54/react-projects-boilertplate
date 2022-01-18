@@ -1,29 +1,37 @@
 import React from 'react';
 
-/**Menu App version 2 - features:
+/**Menu App version 3 - features:
  * 
- *    Here i add the button to 'filterItems' by
- *    category all
- *    
- *    ---this filter still manual in this verion---
+ *   In order to add dynamicly buttons as 
+ *   new categories items in the menu i'll
+ *   map
  */
 
-const Categories = ({ filterItems }) => {
+const Categories = ({ categories, filterItems }) => {
   return (
   <div className='btn-container'>
-    {/**<h2>categories component</h2> */}
-    <button 
-        className='filter-btn' 
-      /**i manually filter the 'category' by string */
-        onClick={() => filterItems('all')}>
-      All
-    </button>
-    <button 
-        className='filter-btn' 
-      /**i manually filter the 'category' by string */
-        onClick={() => filterItems('Christmas food')}>
-      Christmas Food
-    </button>
+    {/**i'll map 'categories' to get the' category'
+     * of every item, as i have a list of them,
+     * i use an 'index'
+     */}
+    {categories.map((category, index) => {
+      /**i return a 'JSX' button with: 
+       *    
+       * ----a 'key' as'index',
+       * ----a 'onClick' action that filterItems
+       *     by category
+       * 
+       * ----a 'value' in each button of 'category'
+      */
+      return(
+        <button 
+            type='button' 
+            className='filter-btn' 
+            key={index}
+            onClick={() => filterItems(category)}
+            >{category}</button>
+      )
+    })}
     
   </div>
     
