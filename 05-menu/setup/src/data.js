@@ -1,3 +1,6 @@
+/**Menu App version 3 -uncomment new data, add 
+ * dynamicly- */
+
 const menu = [
   {
     id: 1,
@@ -103,5 +106,17 @@ const menu = [
     img: './images/item-13.jpg',
     desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
   }
+  /**-- uncomment this data and will be added 
+   *    dynamicly
+   * ,
+  {
+    id: 14,
+    title: 'Pisca Andina',
+    category: 'Andina local food',
+    price: 4.99,
+    img: './images/item-14.jpg',
+    desc: `I'm baby woke mlkshk wolf bitters live-edge blue bottle, hammock freegan copper mug whatever cold-pressed `,
+  }
+   */
 ];
 export default menu;
