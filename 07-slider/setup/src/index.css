@@ -238,17 +238,23 @@ article {
   top: 0;
   left: 0;
   width: 100%;
+  /**the height for the image must be set like this*/
   height: 100%;
-  /* opacity: 0; */
+  opacity: 0; 
   transition: var(--transition);
 }
-/* article.activeSlide {
+/** Here are the style classes to make to transitios*/
+
+/**the is slide that is showing uo*/
+ article.activeSlide {
   opacity: 1;
   transform: translateX(0);
 }
+/**the last slide for people 'data'*/
 article.lastSlide {
   transform: translateX(-100%);
 }
+/**the next slide for people 'data'*/
 article.nextSlide {
   transform: translateX(100%);
-} */
+} 
