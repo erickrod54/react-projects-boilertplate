@@ -2,18 +2,14 @@ import React, { useState } from 'react';
 import data from './data';
 function App() {
 
-  /**Lorem ipsum App version 1 - 
-   *              ------>building states.
+  /**Lorem ipsum App version 2 - 
+   *              ------>mapping the 'text ' array
+   *                    to get dynamicly the data.
    * 
-   *              ------>building a basic input.
-   *                    -to get the paragraph number-
-   * 
-   *              ------> creating the 'handleSubmit'
-   *                      and loopback with a console
-   *                      log to test response after
-   *                      prevent defaul behavior.
-   * 
-   *              ------->styling the lorem ipsum App
+   *              ------>making the data slice by the
+   *                     number of paragraph that are
+   *                     entered -this after converting 
+   *                      count to a number -.
    *                          
   */
   
@@ -22,7 +18,33 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('hello world')
+    /**every time i change the value and
+     * click in generate it promp an 'string'
+     * i can test the type like this:
+     * 
+     *  console.log( typeof count )
+     * 
+     * but i need it in 'integer number':
+     * 
+     *  console.log(count)
+     * 
+     * thats why i create amount and
+     * use a parseInt to convert a 
+     * 'string' in a 'number'.
+     * 
+     * i can test it this way:
+     * 
+     *  console.log(typeof amount)
+     */
+
+    let amount = parseInt(count);
+
+    /**the functionality to get the
+     * desire number of paragraphs 
+     * is with 'slice' from 0 to
+     * 'amount'
+     */
+    setText(data.slice(0,amount));
   }
 
   return (
@@ -31,31 +53,32 @@ function App() {
        * 
        *  -->section-center where the app
        *     is gonna show up
-       *  -->'amount' is the style for paragraphs title.
-       * 
-       *  -->input type'number' where the amount is 
-       *     gonna be entered.
-       * 
-       *  -->button to generate paragraph quantity.
-       * 
-       *  -->article is where the lorem ipsum is gonna be
-       *    generated -this version manually to set some
-       *    kind of style but in the next version will be
-       *    mapped to do it dynamicly-.
-       *  
-       */}
+      */}
       <h2>lorem ipsum project setup</h2>
       <section className='section-center'>
         <h3>tired of boring lorem ipsum?</h3>
         <form className='lorem-form' onSubmit={handleSubmit}>
+          
           <label htmlFor='amount'>
             paragraphs:
           </label>
-          <input type='number' name='amount' id='amount' value={count} onChange={(e) => setCount(e.target.value)}/>
+
+          <input 
+            type='number' 
+            name='amount' 
+            id='amount' 
+            value={count} 
+            onChange=
+            {(e) => setCount(e.target.value)}/>
         <button type='submit' className='btn'>generate</button>
         </form>
+      {/**Here i mapped to do it dynamicly */}
       <article className='lorem-text'>
-        <p>Jelly sweet roll jelly beans bi, blog copper mug forage kitsch roof party pickled hammock kale chips tofu. Etsy shoreditch 8-bit microdosing, XOXO viral butcher banh mi humblebrag listicle woke bicycle rights brunch before they sold out ramps. Twee shabby chic taiyaki flannel, enamel pin venmo vape four loko. Hexagon kale chips typewriter kitsch 8-bit organic plaid small batch keffiyeh ethical banh mi narwhal echo park cronut.`,</p>
+        {text.map((item, index) => {
+          return(
+            <p key={index}>{item}</p>
+          )
+        })}
       </article>
       </section>
     </>
