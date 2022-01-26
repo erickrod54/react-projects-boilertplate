@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import data from './data';
 function App() {
 
-  /**Lorem ipsum App version 2 - 
-   *              ------>mapping the 'text ' array
-   *                    to get dynamicly the data.
-   * 
-   *              ------>making the data slice by the
-   *                     number of paragraph that are
-   *                     entered -this after converting 
-   *                      count to a number -.
+  /**Lorem ipsum App version 3 - 
+   *              ------> condition when the 
+   *                      paragraph count is 
+   *                      less than '0' and 
+   *                      when is more than 
+   *                      '8'
    *                          
   */
   
@@ -18,32 +16,20 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    /**every time i change the value and
-     * click in generate it promp an 'string'
-     * i can test the type like this:
-     * 
-     *  console.log( typeof count )
-     * 
-     * but i need it in 'integer number':
-     * 
-     *  console.log(count)
-     * 
-     * thats why i create amount and
-     * use a parseInt to convert a 
-     * 'string' in a 'number'.
-     * 
-     * i can test it this way:
-     * 
-     *  console.log(typeof amount)
-     */
 
+    
     let amount = parseInt(count);
 
-    /**the functionality to get the
-     * desire number of paragraphs 
-     * is with 'slice' from 0 to
-     * 'amount'
-     */
+    /**these conditions set 'amount' in 1 when
+     * the 'count' is less than '0', and set in
+     * 8 when the 'count' is more than '8'.
+    */
+    if (count <= 0) {
+      amount = 1;
+    }
+    if (count > 8) {
+      amount = 8;
+    }
     setText(data.slice(0,amount));
   }
 
