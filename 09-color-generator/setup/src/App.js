@@ -3,17 +3,13 @@ import SingleColor from './SingleColor'
 
 import Values from 'values.js'
 
-/**Color Generator App - version 1 - Features:
+/**Color Generator App - version 2 - Features:
  * 
- *    ---> building states 
- *    ---> building 'handleSubmit' with loopback to
- *         test functionality.
- *     ---> placing 'JSX':
- *                    ---> title
- *                    ---> basic form
- *                    ---> button
- *                    ---> input
- *                    ---> section for the color data 
+ *    ---> creating the error functionality
+ *         with try catch to find out if exist
+ *         or not and a conditional red border 
+ *         for the input
+ *  
  */
 
 function App() {
@@ -31,35 +27,50 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('hello');
+    /**whith this try-catch i handle the error*/
+    try {
+      
+      /**this makes reference to a library
+       * that has an API with the 'colors'
+       * 
+       * -- https://
+       *   github.com/noeldelgado/values.js
+       * 
+       */
+      /**doing this method i get 20 colors
+       * plus the color i give 21*/
+      let colors = new Values(color).all(10);
+      console.log(colors);
+    } catch (error) {
+      setError(true)
+      console.log(error)
+      
+    }
   }
 
   return (
   <>
-    {/** the title for the project*/}
+    
     <h2>color generator project</h2>
-    {/**this is the container for the whole app*/}
+   
     <section className='container'>
-    {/**the title for the App */}  
-    <h3>Color generator</h3>
-    {/**the form trigering the handleSubmit 
-     * -this version is with the loopback test- */}
-    <form onSubmit={handleSubmit}>
+      <h3>Color generator</h3>
+        <form onSubmit={handleSubmit}>
 
-      <input 
-        type='text'
-        /**the value will fill the color state */ 
-        value={color} 
-        /**'setColor' state for the value being
-          entered*/
-        onChange={(e) => setColor(e.target.value)}
-        /** reference value for user porpuses*/
-        placeholder="#f15025"/>
+          <input 
+            type='text'
+            value={color} 
+            onChange={(e) => setColor(e.target.value)}
+            placeholder="#f15025"
+            /**i add conditionally if an error
+             * exists or not the red border to
+             * the input*/
+            className={`${error ? 'error' : null}`}/>
 
-      <button className='btn' type='submit'>
-        submit
-      </button> 
-    </form>
+          <button className='btn' type='submit'>
+            submit
+          </button> 
+        </form>
     </section>
     <section className='colors'>
       <h4>list goes here</h4>
