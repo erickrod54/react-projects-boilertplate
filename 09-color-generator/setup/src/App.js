@@ -3,13 +3,19 @@ import SingleColor from './SingleColor'
 
 import Values from 'values.js'
 
-/**Color Generator App - version 2 - Features:
+/**Color Generator App - version 3 - Features:
  * 
- *    ---> creating the error functionality
- *         with try catch to find out if exist
- *         or not and a conditional red border 
- *         for the input
- *  
+ *    ---> Building 'SingleColor' component that will
+ *         have the functionality to display the color 
+ * 
+ *    ---> maping 'SingleColor' component the 'color' 
+ *        values from 'SingleColor' component
+ * 
+ *    ---> drilling-accesing 'rgbToHex' as 'hex' with
+ *         a prop called 'hexColor' from:
+ *         
+ *        -->utils.js-->SingleColor-->App.js
+ *         
  */
 
 function App() {
@@ -40,7 +46,7 @@ function App() {
       /**doing this method i get 20 colors
        * plus the color i give 21*/
       let colors = new Values(color).all(10);
-      console.log(colors);
+      setList(colors)
     } catch (error) {
       setError(true)
       console.log(error)
@@ -73,7 +79,22 @@ function App() {
         </form>
     </section>
     <section className='colors'>
-      <h4>list goes here</h4>
+      {list.map((color, index) => {
+        console.log(color)
+        
+        return(
+          <SingleColor 
+              key={index} {...color} 
+              index={index}
+              /**here i use 'hex' to convert
+               * from 'rgbToHex'
+               * 
+               *  --accesing-drilling
+               *    -->utils.js-->SingleColor-->App.js
+              */
+              hexColor={color.hex}/>
+        )
+      })}
     </section>
   </>
     
