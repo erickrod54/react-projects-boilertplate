@@ -3,18 +3,10 @@ import SingleColor from './SingleColor'
 
 import Values from 'values.js'
 
-/**Color Generator App - version 3 - Features:
+/**Color Generator App - version 4 - Features:
  * 
- *    ---> Building 'SingleColor' component that will
- *         have the functionality to display the color 
- * 
- *    ---> maping 'SingleColor' component the 'color' 
- *        values from 'SingleColor' component
- * 
- *    ---> drilling-accesing 'rgbToHex' as 'hex' with
- *         a prop called 'hexColor' from:
- *         
- *        -->utils.js-->SingleColor-->App.js
+ *    ---> i 'setError' to false in the
+ *          try-catch
  *         
  */
 
@@ -46,12 +38,14 @@ function App() {
       /**doing this method i get 20 colors
        * plus the color i give 21*/
       let colors = new Values(color).all(10);
-      setList(colors)
+      setList(colors);
+      setError(false)
     } catch (error) {
       setError(true)
       console.log(error)
       
     }
+  
   }
 
   return (
