@@ -2,17 +2,14 @@ import React, { useState, useEffect } from 'react'
 import rgbToHex from './utils'
 
 
-/**Color Generator App - version 3 - Features: */
+/**Color Generator App - version 4 - Features: */
 
- /**i pass 'rgbToHex' function as a 'prop' called 
-  * 'hexColor' because i need to use it in
-  *     App js --> 'SingleColor' component
+ /**
+  *       --->creating contrast using lighter color 
+  *           for color bases (darkers colors) 
+  *           -conditional style class for article-
   * 
-  * --this way i propdrilling to access 'hex'
-  * --which is converting from rgb to hexadecimal
   * 
-  * ---accesing-drilling from -->utils-->'SingleColor' 
-  * ---Component
   * */
 const SingleColor = ({ rgb, weight, index, hexColor }) => {
 
@@ -33,20 +30,29 @@ console.log(bcg)
  * hexadecimal */
 const hex = rgbToHex(...rgb)
 
+/**i create this variable to keep the hastag
+ * with every color converted, this is for
+ * clipboard porpuses*/
+const hexValue = `# ${hexColor}`
+
   return (
     <>
-    {/**<h4>single color</h4> */}
     <article 
-      className={`color`} 
+      /**this condition add a class 'color-light'
+       * after the 10 colors displayed -base colors-, 
+       * the index is use to set condition to this 
+       * style 
+       */
+      className={`color ${index > 10 && 'color-light'}`} 
       /**the 'background' will be every single 
        * 'rgb' */
       style={{backgroundColor:`rgb(${bcg})`}}>
-        {/**percent value is the weight
-         * -is the color field related to
-         * color density-*/}
+
        <p className='percent-value'>{weight}%</p>
-       {/**i show hex -refers to line 31- */}
-       <p className='color-value'>{hexColor}</p>
+       {/**i show hex -refers to line 31- 
+        * adding hashtag to indicate every color
+        * is an hex value*/}
+       <p className='color-value'>{hexValue}</p>
     </article>
     
     </>
