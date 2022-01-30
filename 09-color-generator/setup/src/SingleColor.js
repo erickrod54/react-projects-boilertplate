@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react'
 import rgbToHex from './utils'
 
 
-/**Color Generator App - version 4 - Features: */
+/**Color Generator App - version 5 - Features: */
 
  /**
-  *       --->creating contrast using lighter color 
-  *           for color bases (darkers colors) 
-  *           -conditional style class for article-
+  *       --->'copied to clipboard' functionality
+  *           setting up 'alert' state
+  *       ---> by 'onClick' trigger an action with
+  *            'navigation.clipboard.writeText' to
+  *             copy the 'hexValue'
+  *       ---->building a 'useEffect' to set a timeout
+  *           to the alert message for dissapear
   * 
   * 
   * */
@@ -19,40 +23,41 @@ console.log(hexColor)
  * us know if someone copy a color to clipboard*/
 const [alert, setAlert ] = useState(false);
 
-/** with 'bcg' i make an array separated by commas
- * from all the 'rgb' color values*/
 const bcg = rgb.join(',')
-
-/**i can see in JavaConsole the way is prompted*/
 console.log(bcg)
-
-/**'hex' --> which is converting from rgb to 
- * hexadecimal */
 const hex = rgbToHex(...rgb)
-
-/**i create this variable to keep the hastag
- * with every color converted, this is for
- * clipboard porpuses*/
 const hexValue = `# ${hexColor}`
+
+/**this useEffect sets a timer of 3 sec
+ * to make dissapear the alert message
+ * of a color that has been copied*/
+useEffect(() => {
+  const  timeout = setTimeout(() => {
+    setAlert(false)
+  }, 3000)
+  return () => clearTimeout(timeout)
+}, [alert])
 
   return (
     <>
     <article 
-      /**this condition add a class 'color-light'
-       * after the 10 colors displayed -base colors-, 
-       * the index is use to set condition to this 
-       * style 
-       */
       className={`color ${index > 10 && 'color-light'}`} 
-      /**the 'background' will be every single 
-       * 'rgb' */
-      style={{backgroundColor:`rgb(${bcg})`}}>
+      style={{backgroundColor:`rgb(${bcg})`}}
+      onClick={() => {
+        /**i set the alert as true */
+        setAlert(true);
+        /**this line copy the value to the 
+         * clipboard by clicking */  
+        navigator.clipboard.writeText(hexValue)
+      }}>
 
        <p className='percent-value'>{weight}%</p>
        {/**i show hex -refers to line 31- 
         * adding hashtag to indicate every color
         * is an hex value*/}
        <p className='color-value'>{hexValue}</p>
+       {alert && <p className='alert'>
+         copied to clipboard</p>}
     </article>
     
     </>
