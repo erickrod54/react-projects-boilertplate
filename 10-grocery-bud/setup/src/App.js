@@ -2,41 +2,31 @@ import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
 
-/**Grocery App version 1 - Features:
+/**Grocery App version 2 - Features:
  * 
- *        ----> Building States.
- *        ----> Building 'handleSubmit' functionality
- *              to add an 'item'.
- *        ----> Styling App.
- *        ----> Placing 'JSX' and Components.
+ *        ---> Building 'Alert' feature.
+ *        ---> Building a 'showAlert' function
+ *             to use 'setAlert'.
+ *        --->full filling conditions with alert 
+ *            when submit with an empty input, and
+ *            when an elements is added .
+ *    
  */
 
 function App() {
 
-  /**this state is to get and set the item 'name' */
   const [name, setName] = useState('');
 
-  /**this state is to get the list and set newItem 
-   * to the 'list' -this will be managed by 
-   * local storage-*/
   const [list, setList] = useState([]);
 
-  /**this state is to handle a 'edit' feature*/
   const [isEditing, setisEditing ] = useState(false);
-
-  /**this state is part of the 'edit' feature*/
   const [editID, setEditID] = useState(null);
 
-  /**this state is for the 'alert' feature:
-   * as a value will have an object key with 
-   * three props:
-   *  
-   *      -->show ( false or true)
-   *      -->msg ( display a sucessful or danger ) 
-   *      -->type ( display a color green or red )
-  */
-  const [alert, setAlert] = useState({show:false, msg:'',
-  type:''})
+  const [alert, setAlert] = useState({
+    show:false, 
+    msg:'', 
+    type:''
+  })
 
 
   /**the 'handleSubmit' functionality has three 
@@ -50,13 +40,23 @@ function App() {
     e.preventDefault();
     if (!name) {
       // display alert
+      
+      showAlert(
+        true,
+        'danger',
+        'please enter a value'
+      )
+
     }else if (name && isEditing) {
       //deal with edit
     }else{
-      //show altert
-
-      /**this is the new element with an 'id' and 
-       * 'name'  props*/
+      //i can use 'showAlert' directly with the
+      //values i want to give it
+      showAlert(
+        true,
+        'success',
+        'item successfuly added'
+      )
       const newItem = {id: new Date().getTime().toString(),
       title: name};
       /**i 'setList' spreading all the newItem list,
@@ -68,28 +68,32 @@ function App() {
     }
   }
 
+  /**this showAlert function will be used
+   * to switch values betwwen a success or
+   * danger within a message*/
+  const showAlert = (show = false, 
+                    type = '', msg = '') => {
+          /**this line 'setAlert 'as 'showAlert' */              
+          setAlert({show, type, msg})
+  }
 
   return (
   <>
     {/**<h2>grocery bud setup</h2> */}
     <section className='section-center'>
-      {/**this form will contain the following:
-       *      --> title.
-       *      --> submit ( can be done by 'onSubmit' 
-       *                  form - Basic Forms Reference
-       *                  or by 'onclick' with a button).
-       * 
-       *      --> input ( to get the item 'name' value
-       *                  and targeting it by 'setName').
-       * 
-       *      -->submit button ( to check 'isEditing' 
-       *                        state).
-       * 
-       */}  
+      
       <form 
         className='grocery-form' 
         onSubmit={handleSubmit}>
-          {alert.show && <Alert />}
+          {alert.show && <Alert 
+                        /**i spread all 'alert' props
+                         * and 'removeAlert' to build
+                         * cleanup function with 
+                         * 'useEffect' in 'Alert' 
+                         * js component
+                         */
+                            {...alert} 
+                            removeAlert={showAlert}/>}
 
           <h3>grocery bud</h3>
           <div className='form-control'>
@@ -104,14 +108,7 @@ function App() {
             </button>
           </div>
         </form>
-      {/** this is where i render the newItems that
-       * are being added to the 'List' component 
-       * ( this component contain list values )
-      */}
-
-      {/**i check first that the list length is greater
-       * than 0, and check the 'List' component existence
-       */}
+  
       {list.length > 0 && 
         (<div className='grocery-container'>
           <List items={list}/>
