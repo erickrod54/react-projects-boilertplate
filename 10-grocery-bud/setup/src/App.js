@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
 
-/**Grocery App version 2 - Features:
+/**Grocery App version 3 - Features:
  * 
- *        ---> Building 'Alert' feature.
- *        ---> Building a 'showAlert' function
- *             to use 'setAlert'.
- *        --->full filling conditions with alert 
- *            when submit with an empty input, and
- *            when an elements is added .
+ *        ---> Building 'clear items' feature
+ *        ---> RemoveItem feature
+ *        ---> Drilling 'list' value to Alert Component
+ *             to setTimeOut    
  *    
  */
 
@@ -68,13 +66,30 @@ function App() {
     }
   }
 
-  /**this showAlert function will be used
-   * to switch values betwwen a success or
-   * danger within a message*/
   const showAlert = (show = false, 
                     type = '', msg = '') => {
           /**this line 'setAlert 'as 'showAlert' */              
           setAlert({show, type, msg})
+  }
+
+  /**i build the clearList functionality with
+   * a 'showAlert' danger type and a setList([])
+   */
+  const clearList = () => {
+    showAlert(true, 'danger', 'empty list')
+    setList([])
+  }
+
+  /**i build remove item targeting the 'id', showing
+   * an alert and 'setList' to return a new list 
+   * with the values that not include the 'id' targeted 
+   */
+  const removeItem = (id) => {
+    showAlert( 
+       true, 
+      'danger', 
+      'item removed from the List')
+    setList(list.filter((item) => item.id !== id))
   }
 
   return (
@@ -86,14 +101,11 @@ function App() {
         className='grocery-form' 
         onSubmit={handleSubmit}>
           {alert.show && <Alert 
-                        /**i spread all 'alert' props
-                         * and 'removeAlert' to build
-                         * cleanup function with 
-                         * 'useEffect' in 'Alert' 
-                         * js component
-                         */
                             {...alert} 
-                            removeAlert={showAlert}/>}
+                            removeAlert={showAlert}
+           /**i drill the list value to 'Alert' 
+            * Component */                 
+           list={list}/>}
 
           <h3>grocery bud</h3>
           <div className='form-control'>
@@ -111,10 +123,15 @@ function App() {
   
       {list.length > 0 && 
         (<div className='grocery-container'>
-          <List items={list}/>
-          <button className='clear-btn'>
-            clear items
-          </button>
+          <List 
+            items={list} 
+            /**i drill the functionality to List
+             * Component */
+            removeItem={removeItem}/>
+          <button 
+            className='clear-btn' 
+            onClick={clearList}
+            > clear items </button>
         </div>
         )}  
     </section>
