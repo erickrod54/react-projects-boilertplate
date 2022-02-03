@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
 
-/**Grocery App version 3 - Features:
+/**Grocery App version 4 - Features:
  * 
- *        ---> Building 'clear items' feature
- *        ---> RemoveItem feature
- *        ---> Drilling 'list' value to Alert Component
- *             to setTimeOut    
+ *        ---> Building editItem functionality    
  *    
  */
 
@@ -47,6 +44,30 @@ function App() {
 
     }else if (name && isEditing) {
       //deal with edit
+      /**i 'setList' mapping the list values and 
+       * returning the whole items plus title with
+       * the name already edited
+      */
+      setList(
+        list.map((item) => {
+        
+        if (item.id === editID) {
+          return {...item, title:name}
+        }
+        /**i return the item */
+        return item
+        })
+      )
+      /**'setName' to blank after being edited
+       * 'setEditID' to null 
+       * 'setisEditing' to false
+       * 'showAlert' referent to the edit action
+       */
+      setName(''); 
+      setEditID(null);
+      setisEditing(false);
+      showAlert(true, 'success', 'value changed');
+
     }else{
       //i can use 'showAlert' directly with the
       //values i want to give it
@@ -92,6 +113,19 @@ function App() {
     setList(list.filter((item) => item.id !== id))
   }
 
+  /**Here i build the 'editItem' i apply the find 
+   * method to find the item which 'id' matches, 
+   * then i 'setisEditing' to 'true', 'setEditID' 
+   * -to keep the id value-, and 'setName'
+   * to the 'title' of the 'specificItem' */
+
+  const editItem = (id) => {
+    const specificItem = list.find((item) => item.id === id)
+    setisEditing(true)
+    setEditID(id)
+    setName(specificItem.title)
+  }
+
   return (
   <>
     {/**<h2>grocery bud setup</h2> */}
@@ -127,7 +161,8 @@ function App() {
             items={list} 
             /**i drill the functionality to List
              * Component */
-            removeItem={removeItem}/>
+            removeItem={removeItem}
+            editItem={editItem}/>
           <button 
             className='clear-btn' 
             onClick={clearList}
