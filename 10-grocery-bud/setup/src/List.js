@@ -1,18 +1,15 @@
 import React from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 
-/**Grocery App version  1 - 'List' Component, 
+/**Grocery App version  3 - 'List' Component, 
  * Features:
  * 
- *    ---> i drill the prop 'items' to get the list
- *         of the newItem.
+ *    ---> i get 'removeItem' feature drilled from 
+ *         App js, and i trigger 'onClick' targeting
+ *        the 'id' 
  * 
- *    ---> i map 'items' to render every 'item'
- *         with fontAwesome to edit and delete
- *         ( functionality not set yet in 
- *         this version).
-*/
-const List = ({items}) => {
+ * */
+const List = ({items, removeItem}) => {
   return (
     <>
       {/**<h2>list component</h2> */}
@@ -45,7 +42,10 @@ const List = ({items}) => {
                   </button>
                   <button 
                       type='button' 
-                      className='delete-btn'>
+                      className='delete-btn'
+                      /**here i trigger the delete
+                       * 'onClick' on 'FaTrash' icon*/
+                      onClick={() => removeItem(id)}>
                     <FaTrash />
                   </button>
                 </div>
