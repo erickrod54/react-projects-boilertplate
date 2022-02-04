@@ -1,15 +1,15 @@
 import React from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 
-/**Grocery App version  3 - 'List' Component, 
+/**Grocery App version  4 - 'List' Component, 
  * Features:
  * 
- *    ---> i get 'removeItem' feature drilled from 
- *         App js, and i trigger 'onClick' targeting
- *        the 'id' 
+ *    ---> i get 'editItem' feature drilled from 
+ *         App js, and i trigger the edit
+          'onClick' on 'FaTEdit' icon
  * 
  * */
-const List = ({items, removeItem}) => {
+const List = ({items, removeItem, editItem }) => {
   return (
     <>
       {/**<h2>list component</h2> */}
@@ -37,7 +37,10 @@ const List = ({items, removeItem}) => {
                 <div className='btn-container'>
                   <button 
                       type='button' 
-                      className='edit-btn'>
+                      className='edit-btn'
+                      /**here i trigger the edit
+                       * 'onClick' on 'FaTEdit' icon*/  
+                      onClick={() => editItem(id)}>
                     <FaEdit />
                   </button>
                   <button 
