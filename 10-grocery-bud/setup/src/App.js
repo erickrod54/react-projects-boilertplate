@@ -2,17 +2,38 @@ import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
 
-/**Grocery App version 4 - Features:
+/**Grocery App version 5 - Features:
  * 
- *        ---> Building editItem functionality    
+ *        ---> Building 'data persistence' using
+ *                -->Local Storage 
+ *                -->useEffect
+ *                   
  *    
  */
+
+/**this function will make the list value 
+ * persistent because will be thenew value
+ * for the list 'state' */
+const getLocalStorage = () => {
+  /**first i setItem, now i 'getItem' using the
+   * key name*/
+  let list = localStorage.getItem('list');
+
+  /**if the list value is true */
+  if (list) {
+    /**i'll return the localStorage getting the list */
+    return JSON.parse(localStorage.getItem('list'))
+  }else{
+    /**by default an empty array */
+    return []
+  }
+}
 
 function App() {
 
   const [name, setName] = useState('');
 
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(getLocalStorage());
 
   const [isEditing, setisEditing ] = useState(false);
   const [editID, setEditID] = useState(null);
@@ -125,6 +146,16 @@ function App() {
     setEditID(id)
     setName(specificItem.title)
   }
+
+  useEffect(() => {
+    /**setItem is a method from the localStorage API
+     * first parameter will be a 'key' name that i'll
+     * use, ann i re-write the list as strings values
+     */
+    localStorage.setItem('list', JSON.stringify(list))
+    /**the dependency for the change will be the 'list'
+     * value */
+  }, [list])
 
   return (
   <>
