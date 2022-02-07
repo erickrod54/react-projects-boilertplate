@@ -8,6 +8,7 @@ import SideBar from './SideBar'
  * 
  *  --->Finished Basic Structure
  *  --->Importing 'SideBar' component 
+ *  --->Fixing Components file extensions from 'js' to 'jsx'
  *  
  */
 
