@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { FaBars, FaTwitter } from 'react-icons/fa'
-import './SideBar'
+import { links, social } from './data'
+
 import logo from './logo.svg'
 import SideBar from './SideBar'
 
-/**NavBar version 2 - Features:
+/**NavBar version 3 - Features:
  * 
- *  --->Finished Basic Structure
- *  --->Importing 'SideBar' component 
- *  --->Fixing Components file extensions from 'js' to 'jsx'
+ *  --->Migrating 'SideBar' Component to 'App js' next to 
+ *      'NavBar' Component
+ *  --->Mapping 'social' media data from data js file
  *  
  */
 
@@ -25,23 +26,28 @@ const Navbar = () => {
                 <FaBars />
               </button>
           </div>
-          <SideBar />
+          <div className='links-container show-container'>
+            <ul className='links'>
+              {links.map((link) => {
+                const { id, url, text } = link
+                return(
+                  <li key={id}>
+                    <a href={url}>{text}</a>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+          
           <ul className='social-icons'>
-            <li>
-              <a href='https://twitter.com'>
-                <FaTwitter />
-              </a> 
-            </li>
-            <li>
-              <a href='https://twitter.com'>
-                <FaTwitter />
-              </a> 
-            </li>
-            <li>
-              <a href='https://twitter.com'>
-                <FaTwitter />
-              </a> 
-            </li>
+            {social.map((media) =>{
+              const { id, url, icon } = media;
+              return(
+                <li key={id}>
+                  <a href={url}>{icon}</a>
+                </li>
+              )
+            })}
           </ul>
       </div>
     </nav>
