@@ -3,17 +3,19 @@ import { FaBars, FaTwitter } from 'react-icons/fa'
 import { links, social } from './data'
 
 import logo from './logo.svg'
-import SideBar from './SideBar'
 
-/**NavBar version 3 - Features:
+
+/**NavBar version 4 - Features:
  * 
- *  --->Migrating 'SideBar' Component to 'App js' next to 
- *      'NavBar' Component
- *  --->Mapping 'social' media data from data js file
+ *  --->Building 'simple toggle' feature
+ *  ---> Building showLinks state to create the toggle
+ *  ---> creating short circuit condition to render the 
+ *       links onClick of nav-toggle button
  *  
  */
 
 const Navbar = () => {
+  const [ showLinks, setShowLinks ] = useState(false)
   return (
     <>
     {/**<h4>navbar</h4> */}
@@ -22,11 +24,16 @@ const Navbar = () => {
           <div className='nav-header'>
               <img src={logo} alt='logo'/>
               {/**issue with the FaBar style 'nav-toggle'*/}
-              <button className=''>
+              <button className='' onClick={() => setShowLinks(!showLinks)}>
                 <FaBars />
               </button>
           </div>
-          <div className='links-container show-container'>
+          {showLinks && 
+          <div 
+          /**i conditionally render styes, to get a transition, that
+           * get me better user experience than only mounting component*/
+            className={`${showLinks ? 
+           'links-container show-container' : 'links-container'}`}>
             <ul className='links'>
               {links.map((link) => {
                 const { id, url, text } = link
@@ -38,6 +45,7 @@ const Navbar = () => {
               })}
             </ul>
           </div>
+          }
           
           <ul className='social-icons'>
             {social.map((media) =>{
