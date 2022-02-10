@@ -1,11 +1,10 @@
 import React from 'react'
 import Navbar from './Navbar'
-import './SideBar'
-import SideBar from './SideBar'
 
-/** NavBar app version 3 - Features:
+
+/** NavBar app version 4 - Features:
  * 
- *      -----> importing 'SideBar' Component
+ *      -----> Removing SideBar Component
  * 
  */
 
@@ -14,7 +13,7 @@ function App() {
     <>
       {/**<h2>navbar project setup</h2> */}
       <Navbar />
-      <SideBar />
+      
     </> 
   )
 }
