@@ -1,11 +1,11 @@
 import React from 'react'
 import { FaBehance, FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa'
+
+/** NavBar app version 5 - if i add data to the links i can see 
+ * how the container is dynamicly modified */
+
 export const links = [
-  {
-    id: 1,
-    url: '/',
-    text: 'random',
-  },
+
   {
     id: 2,
     url: '/about',
