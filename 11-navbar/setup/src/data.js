@@ -4,6 +4,15 @@ import { FaBehance, FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa'
 /** NavBar app version 5 - if i add data to the links i can see 
  * how the container is dynamicly modified */
 
+/**
+ *  --- test item
+ *   {
+    id: 1,
+    url: '/',
+    text: 'random',
+  },
+ */
+
 export const links = [
 
   {
