@@ -2,10 +2,20 @@ import React from 'react'
 import Modal from './Modal'
 import Sidebar from './Sidebar'
 import Home from './Home'
+/**
+ * SideBar-Modal app version 1 - Features:
+ * 
+ *        --->Placing 'Home' Component, 'Modal' Component,
+ *            and 'SideBar' Component
+ * 
+ */
+
 function App() {
   return (
     <>
-      <h2>modal-sidebar project setup</h2>
+      <Home />
+      <Modal />
+      <Sidebar />
     </>
   )
 }
