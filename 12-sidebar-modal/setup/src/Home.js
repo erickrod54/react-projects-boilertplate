@@ -1,16 +1,22 @@
 import React, { useContext } from 'react'
 import { FaBars } from 'react-icons/fa'
+import { AppContext } from './context'
 
 /**
- * SideBar-Modal app version 1 - Home Component - Features:
- *          ---->Structuring placing '<FaBars />' to toggle 
- *               the 'SideBar' Component  
- *          ---->Placing the button to show modal
- *          ---->Styling: 'sidebar-toggle' -for SideBar button-
- *               and 'btn' -to show modal-
- */
+ * SideBar-Modal app version 2 - Home Component - Features:
+ * 
+ *          ---->Testing accesing 'hello world' value from
+ *               'context' js file to Home Component
+ * 
+ * Note: When i set a context, everytime i import it i can
+ * access it from every component that i want -this case
+ * for testing propuses accesing from Home Component- 
+ * */
 
 const Home = () => {
+  const data = useContext(AppContext)
+  /**i can see it prompted in JavaConsole */
+  console.log(data)
   return(
     <>
       {/**<h2>home component</h2> */}
