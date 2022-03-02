@@ -1,15 +1,17 @@
 import React, { useState, useContext } from 'react'
 
-/**SideBar-Modal app version 2 - context js file - Features: 
+/**SideBar-Modal app version 3 - context js file - Features: 
  *          
- *          -->Building a context to toggle SideBar and Modal
- *             component
- *          -->Building a provider to provide values top
- *             down to the children
+ *          -->Building a 'custom hook' 
  * 
- * Note: i do it this way in order to avoid prop-drilling
- * or adding more components than will result in high 
- * complexity for the app -so this step is very important- */
+ * 
+ * Note: this is an alternative implementation to importing 
+ * useContext and AppContext from every component that i 
+ * wanted to provide data- this example still use Home 
+ * component but can be any Component thati need-
+ * 
+ * --this implementation makes more clean code--
+ */
 
 
 /**First a create a variable to keep the context hook
@@ -23,6 +25,11 @@ const AppProvider = ({children}) => {
     return <AppContext.Provider value='hello world'>
                 {children}
             </AppContext.Provider>
+}
+
+//here i build a 'custom hook'
+export const useGlobalContext = () => {
+    return useContext(AppContext)
 }
 
 /**here i export both 'context' and 'provider' */
