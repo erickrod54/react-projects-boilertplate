@@ -1,31 +1,34 @@
 import React from 'react'
 import { FaTimes } from 'react-icons/fa'
+import { useGlobalContext } from './context'
 
 /**
- * SideBar-Modal app version 1 - Modal Component - Features:
- *          ----> Placing a 'modal container' and a 
- *                '<FaTimes />' icon to close the modal 
- *          ----> Styling the 'Modal' component:
+ * SideBar-Modal app version 2 - Modal Component - Features:
+ *          ---->importing 'useGlobalContext' to get props
+ *               and functionality.
+ *          ----> getting isModalOpen state.
+ *          ---->getting closeModal functionality
  * 
- *                -->`modal-overlay` with a `show-modal` toggle
- *                    class -to style and show the modal and 
- *                    its content-. 
- * 
- *                -->`modal conrainer` the style for
- *                    the modal container.
- *  
- *                -->'close-modal-btn' the 
- *                    style for the close modal button
  */
 
 const Modal = () => {
+  /**here i destructure the state passed throught, and the 
+   * closeModal 'functionality'
+   */
+  const { isModalOpen, closeModal } = useGlobalContext()
+
   return(
     <>
       {/** <h2>Modal</h2> */}
-    <div className={`modal-overlay `}> 
+      {/** here i use ternary operator to open the modal
+       * using the isModalOpen state to toogle the style 
+       * to show or hide the 'Modal'
+      */}
+    <div className={`${isModalOpen ? 'modal-overlay show-modal' : 'modal-overlay'}`}> 
       <div className='modal-container'>
         <h3>modal container</h3>
-        <button className='close-modal-btn'>
+        {/**here i invoke closeModal */}
+        <button className='close-modal-btn' onClick={closeModal}>
           <FaTimes />
         </button>
       </div>
