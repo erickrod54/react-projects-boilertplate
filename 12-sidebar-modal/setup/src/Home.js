@@ -1,20 +1,25 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { FaBars } from 'react-icons/fa'
-import { AppContext } from './context'
+import { useGlobalContext } from './context'
 
 /**
- * SideBar-Modal app version 2 - Home Component - Features:
+ * SideBar-Modal app version 3 - Home Component - Features:
  * 
- *          ---->Testing accesing 'hello world' value from
- *               'context' js file to Home Component
+ *          ---->Implementation of custom hook for 
+ *                testing accesing 'hello world' 
+ *                -this implementation makes code 
+ *                           clean-
  * 
- * Note: When i set a context, everytime i import it i can
- * access it from every component that i want -this case
- * for testing propuses accesing from Home Component- 
+ * Notes: instead of importing --> AppContext
+ *                             --> useContext
+ * 
+ * i import the custom hook 'useGlobalContext' and i invoke it
+ * - the word 'use' before the name of the custom hook is
+ * - mandatory
  * */
 
 const Home = () => {
-  const data = useContext(AppContext)
+  const data = useGlobalContext()
   /**i can see it prompted in JavaConsole */
   console.log(data)
   return(
