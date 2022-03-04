@@ -1,28 +1,57 @@
 import React, { useState, useContext } from 'react'
 
-/**SideBar-Modal app version 3 - context js file - Features: 
+/**SideBar-Modal app version 4 - context js file - Features: 
  *          
- *          -->Building a 'custom hook' 
+ *          -->setting toggle functionality for toogle
+ *             'SideBar' and 'Modal' Component.
+ *  
+ *          --> Building states for 'SideBar' and 'Modal'.
+ * 
+ *          --> Building Reference functionality to set a 
+ *              toggle value for 'SideBar' and 'Modal'.
+ * 
+ *          --> Passing all the states and functionality 
+ *              throught the 'value' of the Provider.
  * 
  * 
- * Note: this is an alternative implementation to importing 
- * useContext and AppContext from every component that i 
- * wanted to provide data- this example still use Home 
- * component but can be any Component thati need-
- * 
- * --this implementation makes more clean code--
  */
 
 
-/**First a create a variable to keep the context hook
- * functionality -this is the 'context'-*/
 const AppContext = React.createContext();
 
-/**Second i build a variable to keep the provider, and 
- * provide a value top-down to the children 
- * -this is the provider-*/
 const AppProvider = ({children}) => {
-    return <AppContext.Provider value='hello world'>
+   /**here i build the state to toggle 'Sidebar' */ 
+    const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
+    /**here i build the state to toggle 'Modal' */
+    const [ isModalOpen, setIsModalOpen ] = useState(false);
+
+    /**Reference function to open the 'SideBar' */
+    const openSidebar = () => {
+        setIsSidebarOpen(true)
+    }
+   /**Reference function to close the 'SideBar' */
+    const closeSidebar = () => {
+        setIsSidebarOpen(false)
+    }
+    /**Reference function to open the 'Modal' */    
+    const openModal = () => {
+        setIsModalOpen(true)
+    }
+    /**Reference function to close the 'Modal' */    
+    const closeModal = () => {
+        setIsModalOpen(false)
+    }
+
+    return <AppContext.Provider 
+            /**here i pass eveerything as a object */
+                                value={{
+                                    isModalOpen,
+                                    isSidebarOpen,
+                                    openModal,
+                                    openSidebar,
+                                    closeModal,
+                                    closeSidebar
+                                }}>
                 {children}
             </AppContext.Provider>
 }
