@@ -2,34 +2,41 @@ import React from 'react'
 import logo from './logo.svg'
 import { FaTimes } from 'react-icons/fa'
 import { social, links } from './data'
+import { useGlobalContext } from './context'
 
 /**
- * SideBar-Modal app version 1 - SideBar Component - Features:
- *          ----> Mapping 'links' for Sidebar Component
- *          ----> Mapping 'social' for social links 
- *                  -for Sidebar Component-
+ * SideBar-Modal app version 2 - SideBar Component - Features:
+ *        
+ *          ---->importing 'useGlobalContext' to get props
+ *               and functionality.
+ *          ---->getting the 'isSidebarOpen' state
+ *          ---->getting the 'closeSidebar' fucntionality
  * 
- *          ----> Styling the 'SideBar' Component component:
- * 
- *                -->`sidebar show-sidebar` -the second style-
- *                    to toggle the SideBar Component
- * 
- *                -->'sidebar-header' that goes with a logo
- *  
- *                -->'links' -style for every link-
- * 
- *                -->'social' -style for every social media 
- *                            link-
+ * Note: refer to 'context js' to see the props -state and 
+ * functionality that are being passed as value-              
+ *                         
  */
 
 const Sidebar = () => {
+  /**here i destructure what i need to useGlobalcontext*/
+  const { isSidebarOpen, closeSidebar } = useGlobalContext()
+
   return (
   <>
     {/**<h2>sidebar</h2> */}
-    <aside className={`sidebar show-sidebar`}>
+    {/**here i use ternary operator and isSidebarOpen to toggle */}
+    <aside 
+      className={`${ isSidebarOpen ? 
+                'sidebar show-sidebar' : 
+                'sidebar'}`}>
+
       <div className='sidebar-header'>
         <img src={logo} className='logo' alt='coding addict' />
-          <button className='close-btn'>
+          <button
+            /**here i invoke 'closeSidebar' to close the
+             *  component */ 
+            className='close-btn' 
+            onClick={closeSidebar}>
             <FaTimes />
           </button>
       </div>
