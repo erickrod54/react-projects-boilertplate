@@ -3,35 +3,45 @@ import logo from './images/logo.svg'
 import { FaBars } from 'react-icons/fa'
 import { useGlobalContext } from './context'
 
-/**Stripe-submenu app version 2 - NavBar Component - Features:
+/**Stripe-submenu app version 3 - NavBar Component - Features:
  * 
- *          -->Building the MouseOver feature to display the
- *             'Submenu'
- *          -->Building a 'displaySubmenu' to display the 
- *             submenu -for the moment i'll make a test with
- *             'hello world message' onMouseOver- 
- *          -->Destructuring 'openSubmenu' to trigger it
- * 
- * ------------this feature is set in all the buttons that
- * ------------match with the pages
- * 
- * Note: in this version i make a test with 
- * a reference function 'displaySubmenu' to test 
- * 'onMouseOver = {displaySubmenu}'
+ *          -->Binding onMosueOver with the 'page'-this is the 
+ *             name: Products, Developers, Company - 
  *  
+ *          -->Getting the 'location' to make submenu show
+ *             exactly when i position the mouse on the 
+ *             button
+ *
+ * Note: with the implementation of this feature i'll be
+ * able to change the width of the submenu dynamicly 
+ * depending on how many links has the page 'onMouseOver'
+ * 
+ * displaySubmenu: 
+ * 
+ * if i do 'e.target' i target and get 
+ * prompted the button -i'll get the 'value' of the button-
+ * if i 'console.log(e.target)'
  */
 
 const Navbar = () => {
-  /**here i destructure the three functions 
-   * 'openSidebar', 'openSubmenu', 'closeSubmenu' */
+  
   const { openSidebar, openSubmenu, closeSubmenu } = 
   useGlobalContext()
   
-  /**this is the reference function and i trigger
-   * the openSubmenu function -reference contex js-*/
   const displaySubmenu = (e) => {
-    console.log('hello world');
-    openSubmenu()
+    const page = e.target.textContext;
+    /**this tempBtn give me the exactly position of the button
+     * on Over*/
+    const tempBtn = e.target.getBoundingClientRect();
+    /**now i get the center-this to place the 'Submenu'-
+     * left and right value come from the object*/
+    const center = (tempBtn.left + tempBtn.right) / 2
+    /**then i get the bottom to place the Submenu 3 px under
+     * the button*/
+    const bottom = tempBtn.bottom - 3;
+    /**i call openSubmenu and passing page, center and
+     *  bottom */
+    openSubmenu( page, { center, bottom })
   } 
   return (
   <>
