@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react'
 import sublinks from './data'
 
-/**Stripe-submenu app version 1 - context js file - Features:
+/**Stripe-submenu app version 2 - context js file - Features:
  * 
- *          -->Building 'AppContext' to build the custom hook.
- *          -->Building 'AppProvider' that contains states
- *             realted to the Submenu -that is a modal- and
- *             and state related to 'sidebar'.
- *          -->Building reference functions related to
- *             close and open both 'Modal' and 'SideBar'.
+ *          -->Setting 'isSidebarOpen' state as 'false'
+ *          -->Setting 'isSubmenuOpen' state as 'false'
+ *             -to work on MouseOver feature to display
+ *              the submenu, reference NavBar Component-
  * 
+ * Note: from this version forward i will tackle the NavBar
+ * Modal
  */
 
 /**this is the AppContext to build custom hook*/
@@ -20,8 +20,8 @@ const AppContext = React.createContext();
  * functions to toggle the 'Sidebar' and 'Submenu' */
 export const AppProvider = ({ children }) => {
 
-    const [ isSidebarOpen, setIsSidebarOpen ] = useState(true);
-    const [ isSubmenuOpen, setIsSubmenuOpen ] = useState(true);
+    const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
+    const [ isSubmenuOpen, setIsSubmenuOpen ] = useState(false);
 
     const openSidebar = () => {
         setIsSidebarOpen(true)
