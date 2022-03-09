@@ -3,30 +3,36 @@ import logo from './images/logo.svg'
 import { FaBars } from 'react-icons/fa'
 import { useGlobalContext } from './context'
 
-/**Stripe-submenu app version 1 - NavBar Component - Features:
+/**Stripe-submenu app version 2 - NavBar Component - Features:
  * 
- *          -->Building the structure for the NavBar component
- *          -->Importing 'useGlobalContext', bringing three functions
- *            -only setting one, this version will serve as structure-
+ *          -->Building the MouseOver feature to display the
+ *             'Submenu'
+ *          -->Building a 'displaySubmenu' to display the 
+ *             submenu -for the moment i'll make a test with
+ *             'hello world message' onMouseOver- 
+ *          -->Destructuring 'openSubmenu' to trigger it
  * 
- *          -->Styles appplied: -->'nav' -for NavBar Component-
+ * ------------this feature is set in all the buttons that
+ * ------------match with the pages
  * 
- *                              -->'nav-center' -to center 
- *                                 'nav-header' and 'nav-links'-
- * 
- *                              -->'nav-header'-for the logo 
- *                                  image and the '<FaBars>' to 
- *                                  dispaly the NavBar Component 
- *                                  in smaller screens-
- *                              
- *                              -->'nav-links' -the names in the list
- *                                  must match with reference in data js-
+ * Note: in this version i make a test with 
+ * a reference function 'displaySubmenu' to test 
+ * 'onMouseOver = {displaySubmenu}'
+ *  
  */
 
 const Navbar = () => {
   /**here i destructure the three functions 
    * 'openSidebar', 'openSubmenu', 'closeSubmenu' */
-  const { openSidebar, openSubmenu, closeSubmenu } = useGlobalContext()
+  const { openSidebar, openSubmenu, closeSubmenu } = 
+  useGlobalContext()
+  
+  /**this is the reference function and i trigger
+   * the openSubmenu function -reference contex js-*/
+  const displaySubmenu = (e) => {
+    console.log('hello world');
+    openSubmenu()
+  } 
   return (
   <>
     {/**<h2>navbar component</h2> */}
@@ -43,17 +49,24 @@ const Navbar = () => {
         {/**here i placed the links */}
         <ul className='nav-links'>
           <li>
-            <button className='link-btn'>products</button>
+            <button 
+              className='link-btn' 
+              onMouseOver={displaySubmenu}>products</button>
           </li>
           <li>
-            <button className='link-btn'>developers</button>
+            <button 
+              className='link-btn' 
+              onMouseOver={displaySubmenu}>developers</button>
           </li>
           <li>
-            <button className='link-btn'>company</button>
+            <button 
+              className='link-btn' 
+              onMouseOver={displaySubmenu}>company</button>
           </li>  
         </ul>
       </div>  
-      <button className='btn signin-btn'>Sign in</button>
+      <button 
+        className='btn signin-btn' >Sign in</button>
     </nav> 
   
   </>
