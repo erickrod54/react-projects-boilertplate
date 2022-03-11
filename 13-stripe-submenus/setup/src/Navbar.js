@@ -3,24 +3,16 @@ import logo from './images/logo.svg'
 import { FaBars } from 'react-icons/fa'
 import { useGlobalContext } from './context'
 
-/**Stripe-submenu app version 3 - NavBar Component - Features:
+/**Stripe-submenu app version 4 - NavBar Component - Features:
  * 
- *          -->Binding onMosueOver with the 'page'-this is the 
- *             name: Products, Developers, Company - 
- *  
- *          -->Getting the 'location' to make submenu show
- *             exactly when i position the mouse on the 
- *             button
- *
- * Note: with the implementation of this feature i'll be
- * able to change the width of the submenu dynamicly 
- * depending on how many links has the page 'onMouseOver'
+ *          -->Fixing const 'page = e.target.textContext'
+ *             that is wrong, is:
+ *          
+ *              const 'page = e.target.textContent'
  * 
- * displaySubmenu: 
- * 
- * if i do 'e.target' i target and get 
- * prompted the button -i'll get the 'value' of the button-
- * if i 'console.log(e.target)'
+ * Note: this is important, this is the 'page' text that i 
+ * get from my buttons, and compare with my data to find
+ * a match and get the links for that 'page'
  */
 
 const Navbar = () => {
@@ -29,7 +21,7 @@ const Navbar = () => {
   useGlobalContext()
   
   const displaySubmenu = (e) => {
-    const page = e.target.textContext;
+    const page = e.target.textContent;
     /**this tempBtn give me the exactly position of the button
      * on Over*/
     const tempBtn = e.target.getBoundingClientRect();
