@@ -2,25 +2,13 @@ import React from 'react'
 import { useGlobalContext } from './context'
 import phoneImg from './images/phone.svg'
 
-/**Stripe-submenu app version 2 - Hero Component - Features:
+/**Stripe-submenu app version 4 - Hero Component - Features:
  * 
- *          -->Building basic structure for 'Hero' Component.
- *          -->Destructuring 'closeSubmenu'.
- *    
-
-*          -->Styling: -->'hero'-style for the Hero Component 
-                          and will be a colorfull background 
-                          and will contain the whole contain 
-                          'hero-center'-
+ *          -->Building a hide submenu feature onMouseOver
+ *             'Hero' Component
  * 
- *                      -->'hero-center'-style for content of 
- *                         'hero-info' and 'hero-images'-
- * 
- *                      -->'hero-info' -style for texts explaining the app-
- * 
- *                      -->'hero-images' -style for the image 
- *                          a phone related to the service of 
- *                          the app-          
+ * Note: to build this feature i use 'closeSubmenu' 
+ * functionality          
  */
 
 const Hero = () => {
@@ -28,9 +16,8 @@ const Hero = () => {
   
   return (
   <>
-    {/**<h2>hero component</h2> */}
-    {/**Here is the Hero component colorfull background */}
-    <section className='hero'>
+    {/** */}
+    <section className='hero' onMouseOver={closeSubmenu }>
       {/**Here is the center of the Hero Component*/}
       <div className='hero-center'>
         {/**Here is the articles for 'info' and 'images' */}
