@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react'
 import sublinks from './data'
 
-/**Stripe-submenu app version 2 - context js file - Features:
+/**Stripe-submenu app version 3 - context js file - Features:
  * 
- *          -->Setting 'isSidebarOpen' state as 'false'
- *          -->Setting 'isSubmenuOpen' state as 'false'
- *             -to work on MouseOver feature to display
- *              the submenu, reference NavBar Component-
+ *          -->Setting 'openSubmenu' to work with NavBar
+ *            'displaySubmenu' with the 'location' features
+ *             related to the 'page' buttons.
+ *          -->Building a new state for the 'location'
+ *          -->passing 'location' state and setting it from
+ *             'OpenSubmenu'
  * 
  * Note: from this version forward i will tackle the NavBar
  * Modal
@@ -22,6 +24,8 @@ export const AppProvider = ({ children }) => {
 
     const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
     const [ isSubmenuOpen, setIsSubmenuOpen ] = useState(false);
+    /**this is the state for location-the coordinates- */
+    const [location, setLocation ] = useState({})
 
     const openSidebar = () => {
         setIsSidebarOpen(true)
@@ -30,8 +34,10 @@ export const AppProvider = ({ children }) => {
     const closeSidebar = () => {
         setIsSidebarOpen(false)
     }
-
-    const openSubmenu = () => {
+    /**this new values will be by 'displaySubmenu' 
+     * feature 'page, { center, bottom }' */
+    const openSubmenu = (text, coordinates) => {
+        setLocation(coordinates)
         setIsSubmenuOpen(true)
     }
 
@@ -48,7 +54,8 @@ export const AppProvider = ({ children }) => {
                             openSidebar,
                             closeSidebar,
                             openSubmenu,
-                            closeSubmenu        
+                            closeSubmenu,
+                            location        
                                  }}>
         {children}
     </AppContext.Provider>
