@@ -1,31 +1,31 @@
 import React, { useState, useContext } from 'react'
 import sublinks from './data'
 
-/**Stripe-submenu app version 3 - context js file - Features:
+/**Stripe-submenu app version 4 - context js file - Features:
  * 
- *          -->Setting 'openSubmenu' to work with NavBar
- *            'displaySubmenu' with the 'location' features
- *             related to the 'page' buttons.
- *          -->Building a new state for the 'location'
- *          -->passing 'location' state and setting it from
- *             'OpenSubmenu'
+ *          -->Building a new state for 'page'.
  * 
- * Note: from this version forward i will tackle the NavBar
- * Modal
+ *          -->On 'openSubmenu' feature applying find
+ *             method in order to find the 'sublinks'
+ *             for the 'page' by comparing the 'text'
+ *             i get with the text in the data
+ * 
+ * Note: this version will tackle the feature to display
+ * the information dependending on the 'page' value
+ * -product, company, developers-
+ * 
+ * On Submenu, i'll map the 'sublinks'
  */
 
-/**this is the AppContext to build custom hook*/
 const AppContext = React.createContext();
 
-/**
- * here i build the AppProvider to make states and 
- * functions to toggle the 'Sidebar' and 'Submenu' */
 export const AppProvider = ({ children }) => {
 
     const [ isSidebarOpen, setIsSidebarOpen ] = useState(false);
     const [ isSubmenuOpen, setIsSubmenuOpen ] = useState(false);
-    /**this is the state for location-the coordinates- */
     const [location, setLocation ] = useState({})
+    /**the state value is based on what i need to keep to show */
+    const [ page, setPage ] = useState({page:'', links:[]})
 
     const openSidebar = () => {
         setIsSidebarOpen(true)
@@ -34,9 +34,11 @@ export const AppProvider = ({ children }) => {
     const closeSidebar = () => {
         setIsSidebarOpen(false)
     }
-    /**this new values will be by 'displaySubmenu' 
-     * feature 'page, { center, bottom }' */
+    /**here i'll apply fin method to get page value */
     const openSubmenu = (text, coordinates) => {
+        const page = sublinks.find((link) => link.page === text);
+        /**i have now page, coordinates and setIsSubmenuOpen */
+        setPage(page)
         setLocation(coordinates)
         setIsSubmenuOpen(true)
     }
@@ -55,7 +57,8 @@ export const AppProvider = ({ children }) => {
                             closeSidebar,
                             openSubmenu,
                             closeSubmenu,
-                            location        
+                            location,
+                            page        
                                  }}>
         {children}
     </AppContext.Provider>
