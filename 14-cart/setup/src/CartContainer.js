@@ -2,8 +2,16 @@ import React from 'react'
 import CartItem from './CartItem'
 import { useGlobalContext } from './context'
 
+/**Cart app version 2 - Cart Container js - Features:
+ *            ---> Importing 'useGlobalContext' and destructuring
+ *                 'total' value in order to be use
+ *                       
+ * 
+ * Note: this app has already set a boilerplate in order
+ * to work */
+
 const CartContainer = () => {
-  const { cart } = useGlobalContext()
+  const { cart, total } = useGlobalContext()
   if (cart.length === 0) {
     return (
       <section className='cart'>
@@ -32,7 +40,8 @@ const CartContainer = () => {
         <hr />
         <div className='cart-total'>
           <h4>
-            total <span>$0.00</span>
+            {/**here i set total value*/}
+            total <span>${total}</span>
           </h4>
         </div>
         <button
