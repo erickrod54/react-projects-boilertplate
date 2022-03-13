@@ -2,18 +2,17 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 1 - context js - Features:
- *            --->Switching from 'useState' to 'useReducer'
- *                to start reducers implementations
- *            --->implementing "state" and 'dispatch' instead
- *                of state values.      
+/**Cart app version 2 - context js - Features:
+ *            ---> Cart issue solved by spreading the state
+ *                       
  * 
  * Note: this app has already set a boilerplate in order
- * to work - pending solve cart issue*/
+ * to work */
 
 const url = 'https://course-api.com/react-useReducer-cart-project'
 const AppContext = React.createContext()
 
+/**this state will be spread on the Provider */
 const initialState = {
   loading: false,
   cart: cartItems,
@@ -27,7 +26,7 @@ const AppProvider = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        cart,
+        ...state,
       }}
     >
       {children}
