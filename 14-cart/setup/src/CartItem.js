@@ -1,6 +1,17 @@
 import React from 'react'
 import { useGlobalContext } from './context'
+/**Cart app version 4  - CartItem Component - Features:
+ *            ---> Importing 'useGlobalContext' and destructuring
+ *                 'remove' feature to be use 
+ *                       
+ * 
+ * Note: this action is going to be build on reducer js
+ *  */
+
 const CartItem = ({ id, img, title, price, amount }) => {
+  /**here i destructure 'remove' feature*/
+  const { remove } = useGlobalContext();
+
   return (
     <article className='cart-item'>
       <img src={img} alt={title} />
@@ -10,7 +21,8 @@ const CartItem = ({ id, img, title, price, amount }) => {
         {/* remove button */}
         <button
           className='remove-btn'
-          onClick={() => console.log('remove item')}
+          /**here i trigger the feature targeting the id */
+          onClick={() => remove(id)}
         >
           remove
         </button>
