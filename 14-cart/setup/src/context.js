@@ -2,7 +2,7 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version git  - context js - Features:
+/**Cart app version 3  - context js - Features:
  *            ---> Implementing 'clearCart' action 
  *                       
  * 
