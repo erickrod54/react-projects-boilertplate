@@ -2,12 +2,12 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 2 - context js - Features:
- *            ---> Cart issue solved by spreading the state
+/**Cart app version git  - context js - Features:
+ *            ---> Implementing 'clearCart' action 
  *                       
  * 
- * Note: this app has already set a boilerplate in order
- * to work */
+ * Note: this action is going to be build on reducer js
+ *  */
 
 const url = 'https://course-api.com/react-useReducer-cart-project'
 const AppContext = React.createContext()
@@ -23,10 +23,14 @@ const initialState = {
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
+const clearCart = () => {
+  dispatch({type:'CLEAR_CART'})
+}
   return (
     <AppContext.Provider
       value={{
         ...state,
+        clearCart,
       }}
     >
       {children}
