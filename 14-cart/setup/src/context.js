@@ -2,8 +2,8 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 3  - context js - Features:
- *            ---> Implementing 'clearCart' action 
+/**Cart app version 4  - context js - Features:
+ *            ---> Implementing 'remove' action 
  *                       
  * 
  * Note: this action is going to be build on reducer js
@@ -26,11 +26,17 @@ const AppProvider = ({ children }) => {
 const clearCart = () => {
   dispatch({type:'CLEAR_CART'})
 }
+/**here is is 'remove' build and target 'id' to remove the
+ * specific 'id' that i indicated */
+const remove = (id) => {
+  dispatch({type:'REMOVE', payload: id})
+}
   return (
     <AppContext.Provider
       value={{
         ...state,
         clearCart,
+        remove
       }}
     >
       {children}
