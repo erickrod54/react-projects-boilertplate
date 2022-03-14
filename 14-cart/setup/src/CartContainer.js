@@ -2,16 +2,17 @@ import React from 'react'
 import CartItem from './CartItem'
 import { useGlobalContext } from './context'
 
-/**Cart app version 2 - Cart Container js - Features:
+/**Cart app version 3 - Cart Container Component - Features:
  *            ---> Importing 'useGlobalContext' and destructuring
- *                 'total' value in order to be use
+ *                 'clearCart' action in order to be use
  *                       
  * 
- * Note: this app has already set a boilerplate in order
- * to work */
+ * Note: the action implemented in context js, is going to be
+ * use here by Cart Container */
 
 const CartContainer = () => {
-  const { cart, total } = useGlobalContext()
+  /**here i destructure 'clearCart' feature */
+  const { cart, total, clearCart } = useGlobalContext()
   if (cart.length === 0) {
     return (
       <section className='cart'>
@@ -46,7 +47,8 @@ const CartContainer = () => {
         </div>
         <button
           className='btn clear-btn'
-          onClick={() => console.log('clear cart')}
+          /**here i trigger 'clearCart' onClick */
+          onClick={clearCart}
         >
           clear cart
         </button>
