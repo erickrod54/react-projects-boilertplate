@@ -2,8 +2,9 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 4  - context js - Features:
- *            ---> Implementing 'remove' action 
+/**Cart app version 5  - context js - Features:
+ *            ---> Implementing 'INCREASE' action.
+ *            ---> Implementing 'DECREASE' action 
  *                       
  * 
  * Note: this action is going to be build on reducer js
@@ -31,12 +32,23 @@ const clearCart = () => {
 const remove = (id) => {
   dispatch({type:'REMOVE', payload: id})
 }
+
+const increase = (id) => {
+  dispatch({type:'INCREASE', payload: id})
+}
+
+
+const decrease = (id) => {
+  dispatch({type:'DECREASE', payload: id})
+}
   return (
     <AppContext.Provider
       value={{
         ...state,
         clearCart,
-        remove
+        remove,
+        increase,
+        decrease
       }}
     >
       {children}
