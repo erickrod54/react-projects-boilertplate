@@ -2,12 +2,13 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 5  - context js - Features:
- *            ---> Implementing 'INCREASE' action.
- *            ---> Implementing 'DECREASE' action 
- *                       
+/**Cart app version 6  - context js - Features:
+ *            ---> Implementing 'GET_TOTALS' feature
+ *                 to get the total of the amounts.    
  * 
- * Note: this action is going to be build on reducer js
+ * Note: this action is going to be build on reducer js,
+ * this 'totals' thanks to this 'useEffect' will be
+ * show in the shopping bag on the Navbar
  *  */
 
 const url = 'https://course-api.com/react-useReducer-cart-project'
@@ -37,6 +38,16 @@ const increase = (id) => {
   dispatch({type:'INCREASE', payload: id})
 }
 
+/**useEffect make able to set as dependency 'state.cart'
+ * to track the change on the car and build 'GET_TOTALS' :
+ * 
+ *  >> this 'totals' thanks to this 'useEffect' will be
+ *  >> show in the shopping bag on the Navbar
+ * */
+useEffect(() => {
+//i can test it this way: console.log('hello world')
+  dispatch({type:'GET_TOTALS'})
+}, [state.cart])
 
 const decrease = (id) => {
   dispatch({type:'DECREASE', payload: id})
