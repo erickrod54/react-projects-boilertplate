@@ -1,10 +1,13 @@
-/**Cart app version 5 - reducer js - Features:
- *            ---> Building 'increase' feature
- *            ---> Building 'decrease' feature  
+/**Cart app version 7 - reducer js - Features:
+ *            ---> Building 'reduce' on 'state.cart'
+ *                 to destructure 'total' and 'amount'   
  *                       
  * 
- * Note: the action was implemented in context js, is going to be
- * use by CartItem Component, and is build here reducer js */
+ * Note: with the 'reduce' method im gonna destructure the from 
+ * the data 'price' and 'amount' to the cartItem, notice that 
+ * the data is exported as default without a name -to be use by 
+ * 'reduce' method- check 'data js'
+ * */
 
 const reducer = (state, action) => {
 
@@ -49,6 +52,42 @@ const reducer = (state, action) => {
              * the 'tempCart' -this feature is alike 'remove'-*/
         }).filter((cartItem) => cartItem.amount !== 0)
         return {...state, cart: tempCart} 
+    }
+    if (action.type === 'GET_TOTALS') {
+        /**i'll build the reduce in order to return an 
+         * object with total and amount values, this is the 
+         * way to set up, i defined as let to fix the digits
+         * for the total:
+         * 
+         * >> let { total, amount } = state.cart.reduce(()=> {},{})
+         * 
+         * this first bracket '{' is the function body:
+         * 
+         * >> for the values check in 'data js'
+         * 
+         * after the comma ',' i return the object
+         */
+        let { total, amount } = state.cart.reduce((cartTotal, cartItem)=> {
+            const { price, amount } = cartItem
+        /**to calculate the total for 'cartContainer' i use
+         * a separate variable*/
+        const itemTotal = price * amount;
+        cartTotal.total += itemTotal;    
+            /**if i console log it, definitive helps to get it */
+            //console.log(price, amount)
+            cartTotal.amount += amount;
+            //console.log(cartTotal)
+            return cartTotal
+        },{
+            total:0,
+            amount:0
+        })
+        /**this is the function that will fix digits after 
+         * the comma for the 'total' -is a float needs to 
+         * be fixed for to digits-*/
+        total = parseFloat(total.toFixed(2))
+
+           return { ...state, total, amount}
     }
     return state
 }
