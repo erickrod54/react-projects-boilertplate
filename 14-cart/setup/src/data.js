@@ -1,3 +1,10 @@
+/**Cart app version 7 - data js - Features:
+ *            ---> I'm going to use 'price' and 'amount'
+ *                of every object -named cartItem on reducer js-
+ *                to calculate 'amount' and 'total'.    
+ * 
+ * Note: this action is going to be build on reducer js
+ *  */
 export default [
   {
     id: 1,
