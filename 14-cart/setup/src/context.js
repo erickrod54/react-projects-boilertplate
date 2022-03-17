@@ -2,11 +2,12 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 8  - context js - Features:
- *            ---> Fixing 'await' for response
+/**Cart app version 9  - context js - Features:
+ *            ---> Implementing 'toggleAmount' for 'INCREASE'
+ *                 and 'DECREASE' actions
  *  
- * Note: this implementation will substitute the 'data js'
- * 
+ * Note: this implementation is related with unifying 'INCREASE'
+ * and 'DECREASE' actions
  *  */
 
 /**here i have the API url that contain the data */
@@ -33,10 +34,6 @@ const remove = (id) => {
   dispatch({type:'REMOVE', payload: id})
 }
 
-const increase = (id) => {
-  dispatch({type:'INCREASE', payload: id})
-}
-
 /**here i build a fecthData for 'cart', 
 i made use of promises to fecth data */
 const fetchData = async () => {
@@ -54,6 +51,12 @@ const fetchData = async () => {
 
 }
 
+/**this action will toggle between 'INCREASE' and 'DECREASE'
+ * using as payload the 'type'*/
+const toggleAmount = (id, type) => {
+  dispatch({ type:'TOGGLE_AMOUNT', payload: {id, type}})
+}
+
 /**Here i build the useEffect to display the data */
 useEffect(() => {
   fetchData()
@@ -61,20 +64,17 @@ useEffect(() => {
 
 useEffect(() => {
 //i can test it this way: console.log('hello world')
-  dispatch({type:'GET_TOTALS'})
+  dispatch({  type:'GET_TOTALS' })
 }, [state.cart])
 
-const decrease = (id) => {
-  dispatch({type:'DECREASE', payload: id})
-}
+
   return (
     <AppContext.Provider
       value={{
         ...state,
         clearCart,
         remove,
-        increase,
-        decrease
+        toggleAmount
       }}
     >
       {children}
