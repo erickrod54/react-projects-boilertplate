@@ -1,12 +1,12 @@
-/**Cart app version 7 - reducer js - Features:
- *            ---> Building 'reduce' on 'state.cart'
- *                 to destructure 'total' and 'amount'   
+/**Cart app version 8- reducer js - Features:
+ *            --->Building 'LOADING' action to be displayed
+ *                setting it up by true.
+ *            --->Building 'DISPLAY_ITEMS' to show the
+ *                'action.payload'  that is the cart   
  *                       
  * 
- * Note: with the 'reduce' method im gonna destructure the from 
- * the data 'price' and 'amount' to the cartItem, notice that 
- * the data is exported as default without a name -to be use by 
- * 'reduce' method- check 'data js'
+ * Note: context js was implemented and here in the 
+ * reducer the actions are build
  * */
 
 const reducer = (state, action) => {
@@ -88,6 +88,16 @@ const reducer = (state, action) => {
         total = parseFloat(total.toFixed(2))
 
            return { ...state, total, amount}
+    }
+    /**here i copy the previous state and set loading to true */
+    if (action.type === 'LOADING') {
+       return {...state, loading: true}
+    }
+    /**here i copy the previous state, and set the cart prop
+     * as the 'action.payload' the is the 'cart' value and 
+     * switch loading to 'false'*/
+    if (action.type === 'DISPLAY_ITEMS') {
+       return {...state, cart: action.payload, loading:false}
     }
     return state
 }
