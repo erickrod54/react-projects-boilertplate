@@ -2,15 +2,8 @@ import React, { useState, useContext, useReducer, useEffect } from 'react'
 import cartItems from './data'
 import reducer from './reducer'
 
-/**Cart app version 7  - context js - Features:
- *            ---> Implementing fetching data to get
- *                 cart data from the API:
- * 
- *                  -->Building action for 'LOADING'.
- *                  -->Building action for 'DISPLAY_ITEMS'.
- * 
- *            ---> Implementing a second useEffect
- *                 to make a call for the API.
+/**Cart app version 8  - context js - Features:
+ *            ---> Fixing 'await' for response
  *  
  * Note: this implementation will substitute the 'data js'
  * 
@@ -54,7 +47,7 @@ const fetchData = async () => {
   const response = await fetch(url);
 
   /**the cart with the response converted to json */
-  const cart = response.json();
+  const cart = await response.json();
 
   /**the action to display the items */
   dispatch({type:'DISPLAY_ITEMS', payload:cart})
