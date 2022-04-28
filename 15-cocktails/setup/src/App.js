@@ -7,10 +7,40 @@ import SingleCocktail from './pages/SingleCocktail'
 import Error from './pages/Error'
 // import components
 import Navbar from './components/Navbar'
+
+/**Cocktails app version 1 - 'App' js file - Featrues:
+ * 
+ *      -->Setting the 'Route' for every Component in order
+ *         to create a navigation.
+ * 
+ * Note: This naviagation is made using reatc-router version 5
+ */
+
 function App() {
   return (
     <div>
-      <h2>app component</h2>
+      <Router>
+        <Navbar />
+        <Switch>
+
+          <Route exact path='/'>
+            <Home />
+          </Route>
+
+          <Route path='/about'>
+            <About />
+          </Route>
+
+          <Route path='/cocktail/:id'>
+            <SingleCocktail />
+          </Route>
+
+          <Route path='*'>
+            <Error />
+          </Route>
+
+        </Switch>
+      </Router>
     </div>
   )
 }
