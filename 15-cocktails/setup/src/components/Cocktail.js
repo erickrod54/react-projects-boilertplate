@@ -1,16 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-/**Cocktails app version 3 - 'Cocktail' Component - Features:
+import { CocktailWrapper } from '../styled.components'
+/**Cocktails app version 4 - 'Cocktail' Component - Features:
  * 
- *      --> Destructuring and rendering props related with
- *          the single cocktail from the API.
+ *      --> Importing and Placing 'CocktailWrapper'
+ *          style Component.
  * 
  * Notes: this is the single cocktail Component
  */
 const Cocktail = ({ image, name, id, info, glass }) => {
   return (
     <>
-    <article className='cocktail'>
+    <CocktailWrapper>
       <div className='img-container'>
         <img src={image} alt={name}/>
       </div>
@@ -19,7 +19,7 @@ const Cocktail = ({ image, name, id, info, glass }) => {
         <h4>{glass}</h4>
         <h5>{info}</h5>
       </div>
-    </article>
+    </CocktailWrapper>
     </>
   )
 }
