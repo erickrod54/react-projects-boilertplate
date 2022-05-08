@@ -2,12 +2,13 @@ import React from 'react'
 import Cocktail from './Cocktail'
 import Loading from './Loading'
 import { useGlobalContext } from '../context'
+import { SectionWrapper } from '../styled.components'
 
-/**Cocktails app version 3 - 'CocktailsList' Component - 
+/**Cocktails app version 4 - 'CocktailsList' Component - 
  * Features:
  * 
- *      --> Mapping and rendering the 'cocktails' list that
- *          i fetch form the API.
+ *      --> Importing and Placing 'SectionWrapper' Style
+ *          Component.
  * 
  * Notes: the conditions are made to handle conditions for the
  * search behavior that concerns to this component
@@ -31,7 +32,8 @@ const CocktailList = () => {
   }
 
   return (
-    <section className='section'>
+    <SectionWrapper>
+
     <h2 className='section-title'>
       cocktails
     </h2>
@@ -40,7 +42,9 @@ const CocktailList = () => {
         return <Cocktail key={cocktail.id} {...cocktail} />
       })}
     </div>
-  </section>
+
+    </SectionWrapper>
+ 
   )
 }
 
