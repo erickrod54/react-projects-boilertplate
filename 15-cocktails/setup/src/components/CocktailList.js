@@ -3,10 +3,11 @@ import Cocktail from './Cocktail'
 import Loading from './Loading'
 import { useGlobalContext } from '../context'
 
-/**Cocktails app version 2 - 'CocktailsList' Component - Featrues:
+/**Cocktails app version 3 - 'CocktailsList' Component - 
+ * Features:
  * 
- *      -->Getting the fetching result of cocktails
- *         from the provider.
+ *      --> Mapping and rendering the 'cocktails' list that
+ *          i fetch form the API.
  * 
  * Notes: the conditions are made to handle conditions for the
  * search behavior that concerns to this component
@@ -14,10 +15,7 @@ import { useGlobalContext } from '../context'
 
 const CocktailList = () => {
   const { cocktails, loading } = useGlobalContext()
-  /**here i just console log it to check that i'm
-   * getting the value from the provider
-   */
-  console.log(cocktails)
+
   if (loading) {
     return <Loading />
   }
@@ -33,9 +31,16 @@ const CocktailList = () => {
   }
 
   return (
-    <div>
-      <h2>cocktail list component</h2>
+    <section className='section'>
+    <h2 className='section-title'>
+      cocktails
+    </h2>
+    <div className='cocktails-center'>
+      {cocktails.map((cocktail) => {
+        return <Cocktail key={cocktail.id} {...cocktail} />
+      })}
     </div>
+  </section>
   )
 }
 
