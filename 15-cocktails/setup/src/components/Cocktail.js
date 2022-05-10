@@ -1,9 +1,9 @@
 import React from 'react'
 import { CocktailWrapper } from '../styled.components'
-/**Cocktails app version 4 - 'Cocktail' Component - Features:
+import { Link } from 'react-router-dom'
+/**Cocktails app version 5 - 'Cocktail' Component - Features:
  * 
- *      --> Importing and Placing 'CocktailWrapper'
- *          style Component.
+ *      --> Setting up the Link to take to a 'Cocktail' Detail.
  * 
  * Notes: this is the single cocktail Component
  */
@@ -18,6 +18,9 @@ const Cocktail = ({ image, name, id, info, glass }) => {
         <h3>{name}</h3>
         <h4>{glass}</h4>
         <h5>{info}</h5>
+        {/**here i set the detail */}
+        <Link to={`/cocktail/${id}`} className='btn btn-primary
+        btn-details'> Details</Link>
       </div>
     </CocktailWrapper>
     </>
