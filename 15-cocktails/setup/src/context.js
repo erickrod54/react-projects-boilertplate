@@ -3,51 +3,40 @@ import { useCallback } from 'react'
 
 const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s='
 
-/**Cocktails app version 1 - 'context' file - Features:
+/**Cocktails app version 7 - 'context' file - Features:
  * 
- *      -->Building states.
+ *      -->Setting up 'callback' function to fix
+ *        an infinite loop warning.
  * 
- *      -->Passing as values to the 'Provider' >' loading', 
- *         'cocktails', 'setSearchTerm'.
+ * Note: there is an infinite loop warning when in this
+ * version in order to fix it i add callback function
+ * hook
  * 
- *      -->Building the API request to get the cocktails
- *         data.
+ * to test porpuses i can remove it and checkout the
+ * javaConsole.
  * 
- * Notes: the states will handle 
- * 
- *        'loading' --> loading spinner.
- * 
- *        'searchTerm' --> SearchForm behavior
- * 
- *        'cocktails' --> will handle the data from the API
- * 
- * cocktails data has not been fullfilled in this version
+ * as the dependencies array i use 'searchTerm' and 
+ * 'fetchDrinks' so the fetch will be called just
+ * when detect changes on those features
  */
 
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-  /**Building state for loading */
-  const [ loading, setLoading ] = useState(true)
-  /**Building state for searchTerm*/
-  const [searchTerm, setSearchTerm ] = useState('a')
-  /**Building state for searchTerm*/
-  const [ cocktails, setCocktails ] = useState([])
+ 
+  const [ loading, setLoading ] = useState(true);
+  const [searchTerm, setSearchTerm ] = useState('a');
+  const [ cocktails, setCocktails ] = useState([]);
 
-  /**here i build the API request */
-  const fetchDrinks = async () => {
-    /**i set loading to true while i get the data */
+  
+  const fetchDrinks = useCallback(async () => {
+    
     setLoading(true)
-
-    /**here i build the try-catch functionality*/
     try {
-    /**i fetch the 'url' and 'searchTerm' the last as 
-     * criteria*/
     const response = await fetch(`${url}${searchTerm}`)
     const data = await response.json()
     const { drinks } = data;
 
-    /**if 'drinks' exist */  
     if (drinks) {
       /**then i map it */
       const newCocktails = drinks.map((drink) => {
@@ -73,11 +62,11 @@ const AppProvider = ({ children }) => {
       console.log(error)
     setLoading(false)
     }
-  }
+  }, [searchTerm])
 
   useEffect(() => {
     fetchDrinks()
-  },[searchTerm])
+  },[searchTerm, fetchDrinks])
 
   return (
   <AppContext.Provider 
