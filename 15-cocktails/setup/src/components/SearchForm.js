@@ -2,21 +2,19 @@ import React from 'react'
 import { useGlobalContext } from '../context'
 
 
-/**Cocktails app version 5 - 'SearchForm' Component - Features:
+/**Cocktails app version 7 - 'SearchForm' Component - Features:
  * 
- *        --> Building the 'SearchValue' feature to get render
- *            as result the values typed by the user.
- * 
- *        --> Implementing 'useEffect' to focus on the input
- *            when the app is mounting.
+ *        --> Removing 'cocktails' prop
  * 
  * Notes: every time that i'm typing is the 'setSearchTerm' 
  * functionality is going to be called
+ * 
+ * cocktails prop is not use in this Component.
  */
 
 const SearchForm = () => {
   /**here i destructure setSearchTerm */
-  const { setSearchTerm, cocktails } = useGlobalContext();
+  const { setSearchTerm } = useGlobalContext();
   const searchValue = React.useRef('');
 
   const searchCocktail = () => {
