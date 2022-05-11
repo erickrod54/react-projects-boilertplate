@@ -3,16 +3,20 @@ import Loading from '../components/Loading'
 import { useParams, Link } from 'react-router-dom'
 const url = 'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i='
 
-/**Cocktails app version 6 - 'SingleCocktail' Component - 
+/**Cocktails app version 7 - 'SingleCocktail' Component - 
  * Features:
  * 
- *      --> Setting up the 'lookup' feature using the 
- *          'url' and destructuring the data with friendly
- *          aliasses.
+ *      --> Rendering 'newCocktail' object data
  * 
- * Notes: This component will handle the cocktail at 'detail'
- * level, the 'Link' previously set on Cocktail address to this
- * Component.
+ *      --> Fixing a little bug typo instead of 'strIngredients1' 
+ *          for 'strIngredient1' and so on with the rest of the
+ *          ingredient array.
+ * 
+ *      --> Mapping 'ingredients' array in order to render it
+ *          for each 'SingleCocktail'.
+ * 
+ * Notes: This object is built to get back the data in a
+ * friendly way
  */
 
 const SingleCocktail = () => {
@@ -47,20 +51,20 @@ const SingleCocktail = () => {
             strCategory:category,
             strGlass:glass,
             strInstructions:instructions,
-            strIngredients1,
-            strIngredients2,
-            strIngredients3,
-            strIngredients4,
-            strIngredients5,
+            strIngredient1,
+            strIngredient2,
+            strIngredient3,
+            strIngredient4,
+            strIngredient5
           } = data.drinks[0]
           
           /**here i build an array only for ingredients */
           const ingredients = [
-            strIngredients1,
-            strIngredients2,
-            strIngredients3,
-            strIngredients4,
-            strIngredients5,
+            strIngredient1,
+            strIngredient2,
+            strIngredient3,
+            strIngredient4,
+            strIngredient5
           ]
 
           /**here i build the 'cocktail' object to be
@@ -93,6 +97,9 @@ const SingleCocktail = () => {
     getCocktail()
   }, [id])
 
+  /**Here i handle the loading and just in case if an
+   * error occurs
+   */
   if (loading) {
     return <Loading />
   }
@@ -100,11 +107,59 @@ const SingleCocktail = () => {
   if (!cocktail) {
     return <h2 className='section-title'>no cocktail to display</h2>
   }
+
+/**here i destructure again because the data is in 
+ * 'cocktail' state */
+  const {
+      name, 
+      image, 
+      category, 
+      info, 
+      glass, 
+      instructions, 
+      ingredients } = cocktail;
+
   return (
-    <div>
-      {/**here i get the id */}
-      <h2>{id}</h2>
-    </div>
+    /**here i start to render prop by prop the 'cocktail' */
+    <section className='section cocktails-section'>
+      <Link to='/' className='btn btn-primary'>
+        back home
+      </Link>
+      <h2 className='section-title'>{name}</h2>
+      <div className='drink'>
+        <img src={image} alt={name} />
+        <div className='drink-info'>
+          <p>
+            <span className='drink-data'>name:</span>
+            {name}
+          </p>
+          <p>
+            <span className='drink-data'>category:</span>
+            {category}
+          </p>
+          <p>
+            <span className='drink-data'>info:</span>
+            {info}
+          </p>
+          <p>
+            <span className='drink-data'>glass:</span>
+            {glass}
+          </p>
+          <p>
+            <span className='drink-data'>instructions:</span>
+            {instructions}
+          </p>
+          <p>
+            <span className='drink-data'>ingredients:</span>
+            {/**here i map the ingredients array*/}
+            {ingredients.map((item, index) => {
+              console.log(ingredients)
+              return item ? <span key={index}>{item}</span> : null
+            })}
+          </p>
+        </div>
+      </div>
+    </section>
   )
 }
 
