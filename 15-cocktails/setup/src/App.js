@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 // import pages
 import Home from './pages/Home'
 import About from './pages/About'
@@ -8,12 +8,12 @@ import Error from './pages/Error'
 // import components
 import Navbar from './components/Navbar'
 
-/**Cocktails app version 1 - 'App' js file - Featrues:
+/**Cocktails app version 7 - 'App' js file - Featrues:
  * 
- *      -->Setting the 'Route' for every Component in order
- *         to create a navigation.
+ *      -->Refactoring to react-router version 6
  * 
- * Note: This naviagation is made using reatc-router version 5
+ * Note: This naviagation is made using now is using 
+ * react-router version 6
  */
 
 function App() {
@@ -21,25 +21,12 @@ function App() {
     <div>
       <Router>
         <Navbar />
-        <Switch>
-
-          <Route exact path='/'>
-            <Home />
-          </Route>
-
-          <Route path='/about'>
-            <About />
-          </Route>
-
-          <Route path='/cocktail/:id'>
-            <SingleCocktail />
-          </Route>
-
-          <Route path='*'>
-            <Error />
-          </Route>
-
-        </Switch>
+        <Routes>
+          <Route path='/' element={ <Home />}/>
+          <Route path='/about' element={ <About />}/>
+          <Route path='/cocktail/:id' element={ <SingleCocktail />}/>
+          <Route path='*' element={ <Error />}/>
+        </Routes>
       </Router>
     </div>
   )
