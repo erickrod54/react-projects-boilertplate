@@ -1,0 +1,30 @@
+## markdown preview 
+> Here is a Beautiful Markdown quotte
+#### About
+**Markdown** is a lightweight **markup language**, in this case the **ReactMarkdown** is a Component from **'react-markdown'** library works as a **'pipeline'** and everything that i write on markdown will generate html elements 
+
+#### The un-ordered list
+
+- first
+- second 
+- third
+
+#### The ordered list
+
+1. first 
+2. second
+3. third
+
+```
+/*the tags generated in by this app**/
+
+<h2>
+<h4>
+<bold>
+<ul>
+<li>
+```
+
+[the reference - markdownguide.org](https://www.markdownguide.org/cheat-sheet/#basic-syntax)
+
+[image](https://media.istockphoto.com/photos/mark-up-defined-in-a-business-dictionary-picture-id1391212343)
