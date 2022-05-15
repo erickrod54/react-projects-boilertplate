@@ -10,20 +10,22 @@ import {
 const url = 'https://randomuser.me/api/'
 const defaultImage = 'https://randomuser.me/api/portraits/men/75.jpg'
 
-/**Random person app version 1 - 'App' js file - Features:
+/**Random person app version 2 - 'App' js file - Features:
  * 
- *      --> Building states for 'loading', 'person', 'title',
- *          and 'value'.
- *      
- *      --> Building a reference function 'handleValue' to 
- *          handle the 'onMouseOver' feature over the icons.
+ *      --> Building 'getPerson' to get the data from
+ *          the API url
  * 
- *      --> Setting up image, icons and a button to make 
- *          changes.
+ *      --> Implementing 'useEffect' to invoke the getPerson
+ *          function.
  * 
- * Note: In this version i set a boilerplate with default
- * values, then this values will be replaced with the API
- * data
+ *      --> Destructuring data.results in friendly names 
+ *          aliasses.
+ * 
+ *      --> Building 'newPerson' variable to store the values
+ *          from person.
+ * 
+ * Note: Destructuring the data in 'alias' is a good practice
+ * because makes easier the implementations on the app
  */
 
 function App() {
@@ -32,6 +34,38 @@ function App() {
   const [person, setPerson ] = useState(null)
   const [ title, setTitle ] = useState('name')
   const [ value, setValue ] = useState('random person')
+
+  const getPerson = async () => {
+
+    const response = await fetch(url);
+    const data = await response.json()
+
+    const person = data.results[0]
+    console.log(data)
+    const { phone, email } = person;
+    const { large: image } = person.picture
+    const { login:{password}} = person;
+    const {first, last } = person.name;
+    const { dob: { age }} = person;
+    const {street:{number, name}} = person.location
+     
+    const newPerson = {
+      image,
+      phone,
+      email,
+      password,
+      age,
+      street:`${number} ${name}`,
+      name: `${first} ${last}`
+    }
+
+    setPerson(newPerson)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    getPerson();
+  }, [])
 
   /**here i build the function to handle the 'onMouseOver' 
    * feature */
