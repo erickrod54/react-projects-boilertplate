@@ -10,19 +10,15 @@ import {
 const url = 'https://randomuser.me/api/'
 const defaultImage = 'https://randomuser.me/api/portraits/men/75.jpg'
 
-/**Random person app version 2 - 'App' js file - Features:
+/**Random person app version 3 - 'App' js file - Features:
  * 
- *      --> Building 'getPerson' to get the data from
- *          the API url
+ *      -->Implementing "setTitle('name')" to set back Title.
  * 
- *      --> Implementing 'useEffect' to invoke the getPerson
- *          function.
+ *      -->'setValue(newPerson.name)' to get the name of
+ *          the random user.
  * 
- *      --> Destructuring data.results in friendly names 
- *          aliasses.
- * 
- *      --> Building 'newPerson' variable to store the values
- *          from person.
+ *      --> Setting the 'random user' Button to trigger the 
+ *         'getPerson' onClick. 
  * 
  * Note: Destructuring the data in 'alias' is a good practice
  * because makes easier the implementations on the app
@@ -36,12 +32,16 @@ function App() {
   const [ value, setValue ] = useState('random person')
 
   const getPerson = async () => {
-
+    /**here i fetch the data form the API */
     const response = await fetch(url);
     const data = await response.json()
-
+    
+    /**here i get the 'results' that is the first level*/
     const person = data.results[0]
+    /**i test that i get the 'data' back */
     console.log(data)
+
+    /**here i destructure it in friendly names */
     const { phone, email } = person;
     const { large: image } = person.picture
     const { login:{password}} = person;
@@ -49,18 +49,31 @@ function App() {
     const { dob: { age }} = person;
     const {street:{number, name}} = person.location
      
+    /**here i store the values in 'newPerson' */
     const newPerson = {
       image,
       phone,
       email,
       password,
       age,
+      /**i implement string template to destructure one 
+       * prop in two props.*/
       street:`${number} ${name}`,
       name: `${first} ${last}`
     }
 
+    /**after i set the previous fetching and destructuring */
+
+    /**i set the 'newPerson' */
     setPerson(newPerson)
+    /**set loading to false */
     setLoading(false)
+
+    /**set the 'Title' to 'name' */
+    setTitle('name')
+
+    /**i set the value as the 'name' of the 'random user' */
+    setValue(newPerson.name)
   }
 
   useEffect(() => {
@@ -128,8 +141,12 @@ function App() {
                 <FaLock />
               </button>
             </div>
-            {/**here i place the button */}
-            <button className='btn' type='button'>
+            {/**here i place the button 'random user' */}
+            {/**here the button will generate 'random person' */}
+            <button 
+                className='btn' 
+                type='button' 
+                onClick={getPerson}>
               {loading ? 'loading...' : 'random user'}
             </button>
           </div>
