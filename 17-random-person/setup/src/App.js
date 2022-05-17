@@ -10,18 +10,14 @@ import {
 const url = 'https://randomuser.me/api/'
 const defaultImage = 'https://randomuser.me/api/portraits/men/75.jpg'
 
-/**Random person app version 3 - 'App' js file - Features:
+/**Random person app version 4 - 'App' js file - Features:
  * 
- *      -->Implementing "setTitle('name')" to set back Title.
+ *      -->Building 'handleValue' to get the data from
+ *        the API
  * 
- *      -->'setValue(newPerson.name)' to get the name of
- *          the random user.
- * 
- *      --> Setting the 'random user' Button to trigger the 
- *         'getPerson' onClick. 
- * 
- * Note: Destructuring the data in 'alias' is a good practice
- * because makes easier the implementations on the app
+ * Note: data-label match exactly with every person
+ * prop in order to be accessed them, previously
+ * were named as name, email, age, phone, password
  */
 
 function App() {
@@ -83,7 +79,25 @@ function App() {
   /**here i build the function to handle the 'onMouseOver' 
    * feature */
   const handleValue = (e) => {
-    console.log(e.target)
+
+    /**first i target the 'icon' in order to exactly
+     * trigger the 'onMouseOver' feature*/
+    if (e.target.classList.contains('icon')) {
+      
+      /**then i store in 'newValue' the label
+       * of the button being 'onMouseOver'*/
+      const newValue = e.target.dataset.label;
+      console.log(person)
+      console.log(newValue)
+
+      /**througth the person 'object' i access
+       * to the values using 'newValue' as index*/
+      setValue(person[newValue])
+    }
+    /**data-label match exactly with every person
+     * prop in order to be accessed them, previously
+     * were named as name, email, age, phone, password
+     */
   }
 
   return(
