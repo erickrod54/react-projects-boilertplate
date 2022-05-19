@@ -2,35 +2,50 @@ import React, { useState, useEffect } from 'react'
 import { useFetch } from './useFetch'
 import Follower from './Follower'
 
-/**Pagination app version 1 - 'App' js file - Features:
+/**Pagination app version 2 - 'App' js file - Features:
  * 
- *      --> Building states for 'page', and for 'followers'.
+ *      --> Building buttons to switch between 
+ *          pages.
  * 
- *      --> Implementing 'useEffect' to set the data per
- *          'page' depending on 'loading'.
+ *      -->Building 'handlePage' to set a new
+ *         page.
+ *  
+ *      -->Setting 'page' in 'useEffect' 
+ *        dependency array in order to 
+ *        make the buttons render the new
+ *        pages.
  * 
- */
+ *      -->Setting the active Style Class
+ *        to create a better user 
+ *        experience.
+ * 
+ * Note: This version has the buttons container 
+ * to create the pagination*/
 function App() {
 
   const {loading, data } = useFetch();
-  /**this is the state for 'page'*/
   const [ page, setPage ] = useState(0);
 
-  /**this is the state for 'followers'
-   * that are gonna display in each page*/
   const [ followers, setFollowers ] = useState([])
-  /**i test the data fetch */
+
   console.log('log from App js for new data-->', data)
 
   useEffect(() => {
-    /**if 'loading' will return*/
+
     if (loading) return 
-    /**and i 'setFollowers' as the data with index 'page'
-     * -this way the data change dinamicly-
-    */
     setFollowers(data[page])
-    /**the effect depending on loading */
-  }, [loading])
+    /**here i set index also as dependency
+     *  to trigger the useEffect */
+  }, [loading, page])
+
+  /**Here i build 'handlePage' i target 'index'
+   * in order to paginate */
+  const handlePage = (index) => {
+    /**i set page by 'index' 
+     * -every array set as a unique index
+     * -this way i access them*/
+    setPage(index)
+  }
 
   return(
     <>
@@ -48,6 +63,26 @@ function App() {
               return <Follower key={follower.id} {...follower}/>
             })}
           </div>
+          {/**here i build the container and render
+           * conditionally of the not 'loading' state
+           */}
+          {!loading &&
+            <div 
+              className='btn-container'>
+                {data.map((item, index) => {
+                  return <button 
+                  key={index} 
+                  /**here i set the active class */
+                  className={`page-btn ${index === page ? 
+                            'active-btn' : null}`}
+                  /**i trigger handle page targeting index */
+                  onClick={() => handlePage(index)}
+                  >
+                   {index + 1 }
+                  </button>
+                })}
+              </div>
+          }
         </section>
       </main>
     </>
