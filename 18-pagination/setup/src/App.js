@@ -4,38 +4,47 @@ import Follower from './Follower'
 
 /**Pagination app version 1 - 'App' js file - Features:
  * 
- *      --> Importing 'useFetch()' hook and destructuring
- *          'loading', and  'data'.
+ *      --> Building states for 'page', and for 'followers'.
  * 
- *      --> Building section for the title and style in it.
- * 
- *      -->Building section to contain the 'followers'
- * 
- *      --> Mapping 'Follower' Component by follower 'id'.
- * 
- * Note: 'useFetch()' hook fetch already the data from
- * the github API.
+ *      --> Implementing 'useEffect' to set the data per
+ *          'page' depending on 'loading'.
  * 
  */
 function App() {
 
   const {loading, data } = useFetch();
+  /**this is the state for 'page'*/
+  const [ page, setPage ] = useState(0);
+
+  /**this is the state for 'followers'
+   * that are gonna display in each page*/
+  const [ followers, setFollowers ] = useState([])
   /**i test the data fetch */
-  console.log('log from App js', data)
+  console.log('log from App js for new data-->', data)
+
+  useEffect(() => {
+    /**if 'loading' will return*/
+    if (loading) return 
+    /**and i 'setFollowers' as the data with index 'page'
+     * -this way the data change dinamicly-
+    */
+    setFollowers(data[page])
+    /**the effect depending on loading */
+  }, [loading])
 
   return(
     <>
       <main>
         <div className='section-title'>
           {/**Based in 'loading' existence i condionally render
- *          the title 'Pagination App' */}
+            * the title 'Pagination App' */}
           <h1>{loading ? '...loading' : 'Pagination App'}</h1>
           <div className='underline'/>
         </div>
 
         <section className='followers'>
           <div className='container'>
-            {data.map((follower) => {
+            {followers.map((follower) => {
               return <Follower key={follower.id} {...follower}/>
             })}
           </div>
