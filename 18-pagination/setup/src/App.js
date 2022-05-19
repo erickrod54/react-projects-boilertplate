@@ -2,22 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useFetch } from './useFetch'
 import Follower from './Follower'
 
-/**Pagination app version 2 - 'App' js file - Features:
+/**Pagination app version 3 - 'App' js file - Features:
  * 
- *      --> Building buttons to switch between 
- *          pages.
+ *      --> Building 'prevPage' feature.
  * 
- *      -->Building 'handlePage' to set a new
- *         page.
- *  
- *      -->Setting 'page' in 'useEffect' 
- *        dependency array in order to 
- *        make the buttons render the new
- *        pages.
- * 
- *      -->Setting the active Style Class
- *        to create a better user 
- *        experience.
+ *      --> Building 'nextPage' feature.
  * 
  * Note: This version has the buttons container 
  * to create the pagination*/
@@ -47,6 +36,28 @@ function App() {
     setPage(index)
   }
 
+  /**here i build 'prevPage' function*/
+  const prevPage = () => {
+    setPage((oldPage) => {
+      let prevPage = oldPage - 1;
+      if (prevPage < 0 ) {
+        prevPage = data.length - 1;
+      }
+      return prevPage;
+    })
+  }
+
+  /**here i build 'nextPage' function*/
+  const nextPage = () => {
+    setPage((oldPage) => {
+      let nextPage = oldPage + 1;
+      if (nextPage > data.length - 1) {
+        nextPage = 0;
+      }
+      return nextPage;
+    })
+  }
+
   return(
     <>
       <main>
@@ -69,18 +80,24 @@ function App() {
           {!loading &&
             <div 
               className='btn-container'>
+                {/**here i place prevPage button */}
+                <button className='prev-btn' onClick={prevPage}>
+                  prev
+                </button>
                 {data.map((item, index) => {
                   return <button 
                   key={index} 
-                  /**here i set the active class */
                   className={`page-btn ${index === page ? 
                             'active-btn' : null}`}
-                  /**i trigger handle page targeting index */
                   onClick={() => handlePage(index)}
                   >
                    {index + 1 }
                   </button>
                 })}
+                {/**here i place nextPage button */}
+                <button className='next-btn' onClick={nextPage}>
+                  next
+                </button>
               </div>
           }
         </section>
