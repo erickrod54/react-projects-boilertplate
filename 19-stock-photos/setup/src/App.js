@@ -6,27 +6,16 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 3 - 'App' js file - 
+/**Stock-photos app version 4 - 'App' js file - 
  * Features:
  * 
- *      --> Setting 'setPhotos(data)' to fill
- *          'photos' with the 'data'
+ *      --> Displaying 'image' from the API.
  * 
- *      --> Building a basic form to a 'search'
- *          feature.
+ *      --> Setting 'loading' after to images map the 
+ *         'images' by scrolling -related user experience-
  * 
- *      --> Building a basic form to return
- *          'data'.
- * 
- *      --> Building a 'handleSubmit' function
- *          to handle 'search' feature return.
- * 
- * Note: this case in order to display images
- *  need to set them, and set 'loading' to 'false'
- * 
- * by this version 'handleSubmit' will return
- * the prevent default in order to test that is 
- * working
+ * Note: fixing tiny bug in 'data' variable
+ * must await in order to be mapped.
  * */
 function App() {
 
@@ -42,7 +31,8 @@ function App() {
 
         try {
           const response = await fetch(url);
-          const data = response.json();
+          /**here must await 'response.json();' */
+          const data = await response.json();
           /**here i set 'photo' and 'loading' */
           setPhotos(data);
           setLoading(false);
@@ -67,6 +57,7 @@ function App() {
     <>
       <main>
         <section className='search'>
+          {/**here i build the basic form for the 'search' */}
           <form className='search-form'>
             <input 
               type='text' 
@@ -79,6 +70,18 @@ function App() {
                   <FaSearch />
                 </button>
           </form>
+        </section>
+        <section className='photos'>
+          {/**here i build the basic form to map the 'data' from the api */}
+          <div className='photos-center'>
+            {photos.map((image) => {
+              console.log(image)
+              return <Photo key={image.id} {...image}/>
+            })}
+          </div>
+          {/**i set loading after to images map the 'images' 
+           * by scrolling -related user experience-*/}
+          { loading && <h2 className='loading'>loading ...</h2>}
         </section>
       </main>
     </>
