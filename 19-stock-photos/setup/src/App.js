@@ -6,16 +6,23 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 4 - 'App' js file - 
+/**Stock-photos app version 5 - 'App' js file - 
  * Features:
  * 
- *      --> Displaying 'image' from the API.
+ *      --> Building 'useEffect' in order to listen scroll
+ *          events.
  * 
- *      --> Setting 'loading' after to images map the 
- *         'images' by scrolling -related user experience-
+ * Note: In order the get this done  i have to first add
+ * event listeners to 'scroll event' and get values of 
+ * 'scrollHeigt', 'scrollY', 'innerHeight'.
  * 
- * Note: fixing tiny bug in 'data' variable
- * must await in order to be mapped.
+ * In order to build the 'infinite scroll' i have to
+ * make some calculations, that's why i prompted the
+ * scroll event listeners, 'innnerHeigt + window.scrollY'
+ * must be equal to .body.scrollHeight.
+ * 
+ * that calculations is the end of the document, so by that
+ * point i wanna wetch the images.
  * */
 function App() {
 
@@ -47,6 +54,18 @@ function App() {
   useEffect(() => {
     fetchImages()
   },[])
+
+  useEffect(() => {
+    const event = window.addEventListener('scroll', () => {
+      /**this is the 'height' of the window */
+      console.log(`innerHeight ${window.innerHeight}`)
+      /**this is how much scrolled */
+      console.log(`scroll y ${window.scrollY}`)
+      /**this is how big is the document 'body'*/
+      console.log(`body height ${document.body.scrollHeight}`)
+    })
+    return () => window.removeEventListener('scroll', event)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault();
