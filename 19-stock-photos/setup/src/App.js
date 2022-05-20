@@ -6,21 +6,27 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 2 - 'App' js file - 
+/**Stock-photos app version 3 - 'App' js file - 
  * Features:
  * 
- *      --> Building 'url' using the 'mainUrl'.
+ *      --> Setting 'setPhotos(data)' to fill
+ *          'photos' with the 'data'
  * 
- *      --> Building 'clientID' to get the access
- *          key previously set on an '.env' file.
+ *      --> Building a basic form to a 'search'
+ *          feature.
  * 
- * Note: When i am setting a .env variable, i have to 
- * restart the server in order to get it working.
+ *      --> Building a basic form to return
+ *          'data'.
  * 
- * Setting a 'key' as an enviroment variable is a
- * good practice because can make applications more
- * secure.
+ *      --> Building a 'handleSubmit' function
+ *          to handle 'search' feature return.
  * 
+ * Note: this case in order to display images
+ *  need to set them, and set 'loading' to 'false'
+ * 
+ * by this version 'handleSubmit' will return
+ * the prevent default in order to test that is 
+ * working
  * */
 function App() {
 
@@ -34,15 +40,13 @@ function App() {
         let url;
         url = `${mainUrl}${clientID}`
 
-        /**
-         * 
-         'https://api.unsplash.com/photos/?client_id=ORS8bvDrLdlvnckQexhtFqRY-tGsxtDcx-iaICjygOk'
-         */
         try {
           const response = await fetch(url);
           const data = response.json();
-          /**i prompted to test that i get the data */
-          console.log(data)
+          /**here i set 'photo' and 'loading' */
+          setPhotos(data);
+          setLoading(false);
+
         } catch (error) {
           setLoading(false)
           console.log(error)
@@ -53,7 +57,32 @@ function App() {
   useEffect(() => {
     fetchImages()
   },[])
-  return <h2>stock photos starter</h2>
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('hello it works :) ')
+  }
+
+  return(
+    <>
+      <main>
+        <section className='search'>
+          <form className='search-form'>
+            <input 
+              type='text' 
+              placeholder='search' 
+              className='form-input'></input>
+              <button 
+                type='submit' 
+                className='submit-btn' 
+                onClick={handleSubmit}>
+                  <FaSearch />
+                </button>
+          </form>
+        </section>
+      </main>
+    </>
+  )
 }
 
 export default App
