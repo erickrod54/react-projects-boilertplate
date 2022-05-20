@@ -6,23 +6,14 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 5 - 'App' js file - 
+/**Stock-photos app version 6 - 'App' js file - 
  * Features:
  * 
- *      --> Building 'useEffect' in order to listen scroll
- *          events.
+ *      --> Combining 'window.innerHeight + window.scrollY'
+ *          to get the end of the document.
  * 
- * Note: In order the get this done  i have to first add
- * event listeners to 'scroll event' and get values of 
- * 'scrollHeigt', 'scrollY', 'innerHeight'.
+ * Note: in this version a tested with console log 'it worked'
  * 
- * In order to build the 'infinite scroll' i have to
- * make some calculations, that's why i prompted the
- * scroll event listeners, 'innnerHeigt + window.scrollY'
- * must be equal to .body.scrollHeight.
- * 
- * that calculations is the end of the document, so by that
- * point i wanna wetch the images.
  * */
 function App() {
 
@@ -57,12 +48,18 @@ function App() {
 
   useEffect(() => {
     const event = window.addEventListener('scroll', () => {
-      /**this is the 'height' of the window */
-      console.log(`innerHeight ${window.innerHeight}`)
-      /**this is how much scrolled */
-      console.log(`scroll y ${window.scrollY}`)
-      /**this is how big is the document 'body'*/
-      console.log(`body height ${document.body.scrollHeight}`)
+      /** 'document.body.scrollHeight - 2)' in order to work for 
+       * small and big screens
+      */
+     
+     /**when is not loading '!loading' because 
+      * when i 'fetchImage' loading is 'true'
+      * and i want to fetch while is not loading.*/
+
+      if (!loading && window.innerHeight +
+         window.scrollY >= document.body.scrollHeight - 2) {
+        console.log('it worked')
+      }
     })
     return () => window.removeEventListener('scroll', event)
   }, [])
