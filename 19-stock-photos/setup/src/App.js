@@ -4,20 +4,22 @@ import Photo from './Photo'
 // const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
+const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 1 - 'App' js file - 
+/**Stock-photos app version 2 - 'App' js file - 
  * Features:
  * 
- *      --> Building states for 'loading' and 'photos'.
+ *      --> Building 'url' using the 'mainUrl'.
  * 
- *      --> Building 'useEffect' to invoke 'fetchImages'.
+ *      --> Building 'clientID' to get the access
+ *          key previously set on an '.env' file.
  * 
- *      --> Building 'fetchImages' to get the data
- *          from the API.
+ * Note: When i am setting a .env variable, i have to 
+ * restart the server in order to get it working.
  * 
- * Note: there is an issue when i use 'mainUrl'
- * as string template to construct the 'url'
- * pending to test it
+ * Setting a 'key' as an enviroment variable is a
+ * good practice because can make applications more
+ * secure.
  * 
  * */
 function App() {
@@ -30,7 +32,12 @@ function App() {
   const fetchImages = async() => {
         setLoading(true)
         let url;
-        url = 'https://api.unsplash.com/photos/?client_id=ORS8bvDrLdlvnckQexhtFqRY-tGsxtDcx-iaICjygOk'
+        url = `${mainUrl}${clientID}`
+
+        /**
+         * 
+         'https://api.unsplash.com/photos/?client_id=ORS8bvDrLdlvnckQexhtFqRY-tGsxtDcx-iaICjygOk'
+         */
         try {
           const response = await fetch(url);
           const data = response.json();
