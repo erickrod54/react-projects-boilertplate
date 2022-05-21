@@ -6,33 +6,56 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 6 - 'App' js file - 
+/**Stock-photos app version 7 - 'App' js file - 
  * Features:
  * 
- *      --> Combining 'window.innerHeight + window.scrollY'
- *          to get the end of the document.
+ *      -->Building 'urlPage' to pass 'page' value as param.
  * 
- * Note: in this version a tested with console log 'it worked'
+ *      --> Building 'page' state to set a value to list
+ *          photos.
  * 
+ *      --> Setting 'page' as 'fecthImage' > 'useEffect'
+ *          to fetch when 'page' state changes.
+ * 
+ *      --> Setting 'setPhoto' functionality for 'oldPhotos'
+ *          and the new data.
+ * 
+ *      --> By the end of scrolling setting functionality
+ *          for 'setPage' increment it by '1'. 
+ * 
+ * Note: In this version a i build in the link a param to
+ * list the 'images' 
+ * 
+ *      -->page	Page number to retrieve. 
+ *        (Optional; default: 1) i set it in 3
+ * 
+ * reference --> https://unsplash.com/documentation#list-photos
  * */
 function App() {
 
   /**Here i build the states */
   const [loading, setLoading ] = useState(false);
   const [photos, setPhotos ] = useState([]);
+  const [ page, setPage ] = useState(1)
 
   /**here i build 'fetchImages' */
   const fetchImages = async() => {
         setLoading(true)
         let url;
-        url = `${mainUrl}${clientID}`
+        const urlPage = `&page=${page}`
+        url = `${mainUrl}${clientID}${urlPage}`
 
         try {
           const response = await fetch(url);
           /**here must await 'response.json();' */
           const data = await response.json();
-          /**here i set 'photo' and 'loading' */
-          setPhotos(data);
+
+          /**here i refactor setPhotos to get the photos
+           * that i already have, and the 'data' with the
+           * new ones.*/
+          setPhotos((oldPhotos) => {
+            return [...oldPhotos, ...data]
+          });
           setLoading(false);
 
         } catch (error) {
@@ -44,21 +67,20 @@ function App() {
    * fetchImages*/
   useEffect(() => {
     fetchImages()
-  },[])
+    /**here i set 'page' as dependency*/
+  },[page])
 
   useEffect(() => {
     const event = window.addEventListener('scroll', () => {
-      /** 'document.body.scrollHeight - 2)' in order to work for 
-       * small and big screens
-      */
-     
-     /**when is not loading '!loading' because 
-      * when i 'fetchImage' loading is 'true'
-      * and i want to fetch while is not loading.*/
 
       if (!loading && window.innerHeight +
          window.scrollY >= document.body.scrollHeight - 2) {
-        console.log('it worked')
+          /**by the end of scrolling i fetch again the data
+           * --so i'll get new images
+           */
+          setPage((oldPage) => {
+            return oldPage + 1;
+          })
       }
     })
     return () => window.removeEventListener('scroll', event)
