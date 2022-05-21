@@ -6,30 +6,42 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 7 - 'App' js file - 
+/**Stock-photos app version 8 - 'App' js file - 
  * Features:
  * 
- *      -->Building 'urlPage' to pass 'page' value as param.
+ *      --> Building search feature.
  * 
- *      --> Building 'page' state to set a value to list
- *          photos.
+ *      --> Building state for 'query' -search value-
+ *      
+ *      --> Passing 'query' value and 'handleSubmit' in
+ *          Search form.
  * 
- *      --> Setting 'page' as 'fecthImage' > 'useEffect'
- *          to fetch when 'page' state changes.
+ *      -->Building condition to switch between 'urlPage' and 
+ *        'urlQuery' 
  * 
- *      --> Setting 'setPhoto' functionality for 'oldPhotos'
- *          and the new data.
  * 
- *      --> By the end of scrolling setting functionality
- *          for 'setPage' increment it by '1'. 
+ *      -->Building 'hanldeSubmit' for the search feature.
  * 
- * Note: In this version a i build in the link a param to
- * list the 'images' 
+ *      -->Refactoring 'setPhotos' to get an array of objects
+ *         (oldPhotos and data) based on 'query' value. 
+ * 
+ * Note: 
+ * 
+ * ----this reference is about search feature -----
+ * 
+ *  to test it go to 'Components > App' and type something
+ * 
+ * reference -->https://unsplash.com/documentation#search-photos
+ * 
+ * ---this reference is about infinite scroll------
  * 
  *      -->page	Page number to retrieve. 
  *        (Optional; default: 1) i set it in 3
  * 
  * reference --> https://unsplash.com/documentation#list-photos
+ * 
+ * to watch how the page value changes go to 
+ * 'Network > Fetch/XHR'
  * */
 function App() {
 
@@ -38,23 +50,37 @@ function App() {
   const [photos, setPhotos ] = useState([]);
   const [ page, setPage ] = useState(1)
 
+  /**here is the state to set a query criteria */
+  const [ query, setQuery ] = useState('')
+
+
   /**here i build 'fetchImages' */
   const fetchImages = async() => {
         setLoading(true)
         let url;
         const urlPage = `&page=${page}`
-        url = `${mainUrl}${clientID}${urlPage}`
+        const urlQuery = `&query=${query}`
+        
+        /**here i switch between 'url' based on 'query'*/
+        if (query) {
+          url = `${searchUrl}${clientID}${urlPage}${urlQuery}`
+        }else{
+          url = `${mainUrl}${clientID}${urlPage}`
+        }
 
         try {
           const response = await fetch(url);
           /**here must await 'response.json();' */
           const data = await response.json();
-
-          /**here i refactor setPhotos to get the photos
-           * that i already have, and the 'data' with the
-           * new ones.*/
+          
           setPhotos((oldPhotos) => {
-            return [...oldPhotos, ...data]
+            if (query && page === 1) {
+              return data.results
+            }else if (query) {
+              return [...oldPhotos, ...data.results]
+            }else{
+              return [...oldPhotos, ...data]
+            }
           });
           setLoading(false);
 
@@ -86,9 +112,10 @@ function App() {
     return () => window.removeEventListener('scroll', event)
   }, [])
 
+  /**here is the handle submit for the search feature */
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('hello it works :) ')
+    setPage(1)
   }
 
   return(
@@ -100,7 +127,12 @@ function App() {
             <input 
               type='text' 
               placeholder='search' 
-              className='form-input'></input>
+              className='form-input'
+              /**i pass the query value here */
+              value={query}
+              /**i set the functionality to get 'query' and
+               * set it from the input*/
+              onChange={(e) => setQuery(e.target.value)}></input>
               <button 
                 type='submit' 
                 className='submit-btn' 
