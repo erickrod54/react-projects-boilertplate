@@ -1,13 +1,39 @@
+/**Dark-mode app version 1- 'index' css file - Features: 
+ * 
+ *      -->Building '.dark-theme' Style class.
+ * 
+ *      -->Building '.light-theme' Style class.
+ *
+ * Note: This two classes are build to set a light
+ * and dark theme, this can be done by taking style
+ * component library
+ * */
+
 /*
 =============== 
 Global Styles
 ===============
 */
 
+/*
 :root {
   --clr-bcg: #fff;
   --clr-font: #282c35;
   --clr-primary: #d23669;
+}
+
+**/
+
+.dark-theme{
+  --clr-bcg: #282c35;
+  --clr-font: #fff;
+  --clr-primary: #ffa7c4;
+}
+
+.light-theme{
+  --clr-bcg: #fff;
+  --clr-font: #282c35;
+  --clr-primary: #ffa7c4;
 }
 
 *,
