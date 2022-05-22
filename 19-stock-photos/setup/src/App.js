@@ -6,14 +6,21 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 9 - 'App' js file - 
+/**Stock-photos app version 10 - 'App' js file - 
  * Features:
  * 
- *      --> Fixing the 'results' to wiped out the 
- *          old images results.
+ *      --> Fixing 'useEffect' warning missing 
+ *          dependency. 
  * 
- * Note:  changing the page state to be different value 
- * from the query and setPage will fix the results.
+ * Note:  this message of missing dependency is showing
+ * for version 9 for 'fetchImages' and 'loading'
+ * 
+ * for thos case i fix quickly using 'eslint'
+ * 
+ * ---adding this line --> // eslint-disable-next-line 
+ * 
+ * next to the places where the console indicate the 
+ * warnings 'page' and 'loading' fix the issue.
  * 
  * */
 function App() {
@@ -70,6 +77,7 @@ function App() {
   useEffect(() => {
     fetchImages()
     /**here i set 'page' as dependency*/
+    // eslint-disable-next-line 
   },[page])
 
   useEffect(() => {
@@ -83,9 +91,10 @@ function App() {
           setPage((oldPage) => {
             return oldPage + 1;
           })
-      }
-    })
-    return () => window.removeEventListener('scroll', event)
+        }
+      })
+      return () => window.removeEventListener('scroll', event)
+      // eslint-disable-next-line 
   }, [])
 
   /**here is the handle submit for the search feature */
