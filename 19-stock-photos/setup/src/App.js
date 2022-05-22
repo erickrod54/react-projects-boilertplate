@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import Photo from './Photo'
 // const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
@@ -6,21 +6,22 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 10 - 'App' js file - 
+/**Stock-photos app version 11 - 'App' js file - 
  * Features:
  * 
- *      --> Fixing 'useEffect' warning missing 
- *          dependency. 
+ *      --> Refactoring 'current scroll code'.
+ *    
+ *      --> Set default page to '1'.
  * 
- * Note:  this message of missing dependency is showing
- * for version 9 for 'fetchImages' and 'loading'
+ *      --> Setup two useEffects.
  * 
- * for thos case i fix quickly using 'eslint'
+ *      --> For the second 'UseEffct' i'll use
+ *          useRef to avoid a sceond render -that
+ *          duplicates images on previous versions -
  * 
- * ---adding this line --> // eslint-disable-next-line 
- * 
- * next to the places where the console indicate the 
- * warnings 'page' and 'loading' fix the issue.
+ * Note: on the previous versions the since i run
+ * the initial render in the useEffect 'loading'
+ * state will be always false.
  * 
  * */
 function App() {
@@ -28,8 +29,10 @@ function App() {
   /**Here i build the states */
   const [loading, setLoading ] = useState(false);
   const [photos, setPhotos ] = useState([]);
-  /**here i set page to 0 */
-  const [ page, setPage ] = useState(0)
+  /**here i set page to 1 as part of refactoring
+   * to avoid duplicate images */
+  const [ page, setPage ] = useState(1)
+  const mounted = useRef(false)
 
   /**here is the state to set a query criteria */
   const [ query, setQuery ] = useState('')
@@ -42,7 +45,6 @@ function App() {
         const urlPage = `&page=${page}`
         const urlQuery = `&query=${query}`
         
-        /**here i switch between 'url' based on 'query'*/
         if (query) {
           url = `${searchUrl}${clientID}${urlPage}${urlQuery}`
         }else{
@@ -72,36 +74,34 @@ function App() {
           console.log(error)
         }
   }
-  /**here i Build 'useEffect' to invoke 
-   * fetchImages*/
+
   useEffect(() => {
     fetchImages()
-    /**here i set 'page' as dependency*/
     // eslint-disable-next-line 
   },[page])
 
   useEffect(() => {
-    const event = window.addEventListener('scroll', () => {
-
-      if (!loading && window.innerHeight +
-         window.scrollY >= document.body.scrollHeight - 2) {
-          /**by the end of scrolling i fetch again the data
-           * --so i'll get new images
-           */
-          setPage((oldPage) => {
-            return oldPage + 1;
-          })
-        }
-      })
-      return () => window.removeEventListener('scroll', event)
-      // eslint-disable-next-line 
+    /**checking mounted i avoid a re-render using 'useRef' */
+    if (!mounted.current) {
+      mounted.current = true;
+      return
+    }
+    console.log('second')
   }, [])
 
-  /**here is the handle submit for the search feature */
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    /**and the handle submit sould match with
-     * the search condition*/
+    /**checking on the query fetchs only when i type 
+     * something and hit submit */
+    if(!query) return;
+    /**this condition will ftech me the match images
+     * even if the page is '1'*/
+    if (page === 1) {
+      fetchImages()
+      return;
+    }
+    /**if not, will set to page '1' */
     setPage(1)
   }
 
@@ -132,7 +132,6 @@ function App() {
           {/**here i build the basic form to map the 'data' from the api */}
           <div className='photos-center'>
             {photos.map((image) => {
-              console.log(image)
               return <Photo key={image.id} {...image}/>
             })}
           </div>
