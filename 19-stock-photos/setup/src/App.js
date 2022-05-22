@@ -6,18 +6,15 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 11 - 'App' js file - 
- * Features:
+/**Stock-photos app version 12 - 'App' js file - 
+ * Features: ( continue fix for version 11 )
  * 
  *      --> Refactoring 'current scroll code'.
  *    
- *      --> Set default page to '1'.
+ *      --> Setting up a third 'useEffect' for
+ *          fixing 'current scroll code'
  * 
- *      --> Setup two useEffects.
- * 
- *      --> For the second 'UseEffct' i'll use
- *          useRef to avoid a sceond render -that
- *          duplicates images on previous versions -
+ *      --> Building state to set new images.
  * 
  * Note: on the previous versions the since i run
  * the initial render in the useEffect 'loading'
@@ -33,6 +30,8 @@ function App() {
    * to avoid duplicate images */
   const [ page, setPage ] = useState(1)
   const mounted = useRef(false)
+  /**this state will be use to set new images */
+  const [ newImages, setNewImages ] = useState(false)
 
   /**here is the state to set a query criteria */
   const [ query, setQuery ] = useState('')
@@ -67,11 +66,16 @@ function App() {
               return [...oldPhotos, ...data]
             }
           });
+          /**i place 'setNewImages' here to false*/
+          /**this is very important cause will turn down
+           * before the loading so won't fetch multiple
+           * times causing a re- render*/
+          setNewImages(false)
           setLoading(false);
 
         } catch (error) {
+          setNewImages(false)
           setLoading(false)
-          console.log(error)
         }
   }
 
@@ -84,11 +88,28 @@ function App() {
     /**checking mounted i avoid a re-render using 'useRef' */
     if (!mounted.current) {
       mounted.current = true;
-      return
+      return;
     }
-    console.log('second')
-  }, [])
+    if (!newImages) return
+    if (loading) return
+    /**here i set the infinite scroll */
+    setPage((oldPage) => oldPage + 1)
+    /**i trigger depending on new images */
+  }, [newImages])
 
+  /**in this 'event' variable i set the same condition
+   * to detect the bottom of the page*/
+  const event = () => {
+    if (window.innerHeight + window.scrollY >= 
+      document.body.scrollHeight -2 ) {
+      setNewImages(true)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', event)
+    return () => window.removeEventListener('scroll', event)
+  }, [])
   
   const handleSubmit = (e) => {
     e.preventDefault();
