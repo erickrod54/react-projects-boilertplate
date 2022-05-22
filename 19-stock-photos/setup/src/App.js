@@ -6,49 +6,23 @@ const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-/**Stock-photos app version 8 - 'App' js file - 
+/**Stock-photos app version 9 - 'App' js file - 
  * Features:
  * 
- *      --> Building search feature.
+ *      --> Fixing the 'results' to wiped out the 
+ *          old images results.
  * 
- *      --> Building state for 'query' -search value-
- *      
- *      --> Passing 'query' value and 'handleSubmit' in
- *          Search form.
+ * Note:  changing the page state to be different value 
+ * from the query and setPage will fix the results.
  * 
- *      -->Building condition to switch between 'urlPage' and 
- *        'urlQuery' 
- * 
- * 
- *      -->Building 'hanldeSubmit' for the search feature.
- * 
- *      -->Refactoring 'setPhotos' to get an array of objects
- *         (oldPhotos and data) based on 'query' value. 
- * 
- * Note: 
- * 
- * ----this reference is about search feature -----
- * 
- *  to test it go to 'Components > App' and type something
- * 
- * reference -->https://unsplash.com/documentation#search-photos
- * 
- * ---this reference is about infinite scroll------
- * 
- *      -->page	Page number to retrieve. 
- *        (Optional; default: 1) i set it in 3
- * 
- * reference --> https://unsplash.com/documentation#list-photos
- * 
- * to watch how the page value changes go to 
- * 'Network > Fetch/XHR'
  * */
 function App() {
 
   /**Here i build the states */
   const [loading, setLoading ] = useState(false);
   const [photos, setPhotos ] = useState([]);
-  const [ page, setPage ] = useState(1)
+  /**here i set page to 0 */
+  const [ page, setPage ] = useState(0)
 
   /**here is the state to set a query criteria */
   const [ query, setQuery ] = useState('')
@@ -74,6 +48,8 @@ function App() {
           const data = await response.json();
           
           setPhotos((oldPhotos) => {
+            /**as i made the 'query and page equal' to 1 
+             * here will show me the results*/
             if (query && page === 1) {
               return data.results
             }else if (query) {
@@ -115,6 +91,8 @@ function App() {
   /**here is the handle submit for the search feature */
   const handleSubmit = (e) => {
     e.preventDefault();
+    /**and the handle submit sould match with
+     * the search condition*/
     setPage(1)
   }
 
