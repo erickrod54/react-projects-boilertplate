@@ -2,31 +2,30 @@ import React, { useState, useEffect } from 'react'
 import data from './data'
 import Article from './Article'
 
-/**Dark-mode app version 2- 'App' js file - Features: 
+/**Dark-mode app version 3 - 'App' js file - Features: 
  * 
- *      -->Building state for 'theme' value.
+ *      -->Building 'getStorageTheme' function to store
+ *         the preference theme by the user.
  * 
- *      -->Building 'toggleTheme' feature.
+ *      -->Setting the store 'theme' every time 'useEffect'
+ *         triggers -so the theme will be keep-
  * 
- *      -->Building 'useEffect' to set a 'theme'
- *         value as default.
+ * Note: This version is about keeping the theme preferences.
  * 
- * Note: in order to apply a t'theme' as default in
- * the useEffect i implement:
- * 
- * -----'document.documentElement.className = theme'
- * 
- * the dependency to trigger the useEffect is the 
- * existence of a theme -for this case light-theme-
- * 
- * the names of the classes 'light-theme' and 'dark-theme'
- * must match exactly, for the reason that are used by
- * 'useState' and 'documentElement' to set values to the
- * entire page
  * */
+
+const getStorageTheme = () => {
+    let theme = 'light-theme'
+    if (localStorage.getItem('theme')) {
+
+        theme = localStorage.getItem('theme')
+    }
+    return theme
+}
+
 function App() {
   /**here i build the state for the 'theme' */
-  const [ theme, setTheme ] = useState('light-theme');
+  const [ theme, setTheme ] = useState(getStorageTheme());
 
   /**here i build the 'toogle' feature */
   const toggleTheme = () => {
@@ -40,7 +39,7 @@ function App() {
 
   useEffect(()=>{
     document.documentElement.className = theme;
-
+    localStorage.setItem('theme', theme);
   }, [theme])
 
   return(
