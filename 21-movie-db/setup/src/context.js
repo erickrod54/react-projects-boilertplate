@@ -6,28 +6,72 @@ console.log(API_ENDPOINT)
 
 const AppContext = React.createContext()
 
-/**Movie-db app version 1 - 'context' js file - Features: 
+/**Movie-db app version 2 - 'context' js file - Features: 
  * 
- *      --> Testing API key.
+ *      --> Building states.
+ *      
+ *      -->Building 'fetchMovies' request.
  * 
- *      --> Testing sample search for random results
+ *      -->Building 'useEffect' to invoke 'fetchMovies' 
+ *         request
  * 
- * Note: the test consist in prompted, and get some movie
- * search with the link that i have already with the API
- * key
+ *      -->Setting the 'query' value as dependency array
+ *        -doing this will be re-render movie resuts
+ *         dinamicly- 
  * 
- * Once the API key is set, the server must be restarted, 
- * otherwise i'll get 'undefined' value for the key.
+ *      --> Getting  'isLoading', 'error', 'movies', 
+ *         'query', 'setQuery' throught the 
+ *          AppContext.Provider.
  * 
- *    i use '&s=' to indicate a search
- * 
- *  https://www.omdbapi.com/?apikey=[my key value]&s=avengers
- * 
- *  https://www.omdbapi.com/?apikey=[my key value]&s=batman
+ * Note: Now being doing this i can use these values provided
+ * everywhere where i want in the app
  * 
  * */
+
 const AppProvider = ({ children }) => {
-  return <AppContext.Provider value='hello'>{children}</AppContext.Provider>
+
+  /**here i build the states */
+  const [ isLoading, setisLoading ] = useState(true);
+  const [ error, setError ] = useState({ show: false, msg: ''});
+  const [ movies, setMovies ] = useState([]);
+  const [ query, setQuery ] = useState('avengers')
+
+  /**here i build 'fetch movie request' i pass the url
+   * as the 'e' event*/
+  const fetchMovies = async (url) => {
+    setisLoading(true)
+    try {
+      const response = await fetch(url)
+      const data = await response.json();
+      //console.log(data)
+
+      /**checking the console log of 'data' the props
+       * and props 'values' are capitalize that why i
+       * compare with capitalize value and use capitalize
+       * props*/
+      if (data.Response === 'True') {
+        setMovies(data.Search);
+        setError({show:false, msg:''})
+      }else{
+        setError({ show:true, msg: data.Error })
+      }
+      setisLoading(false)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    /**here i pass the 'url' with a default search query set*/
+    fetchMovies(`${API_ENDPOINT}&s=${query}`)
+  }, [query])
+  return <AppContext.Provider value={{
+    isLoading, 
+    error, 
+    movies, 
+    query, 
+    setQuery}}>{children}</AppContext.Provider>
 }
 // make sure use
 export const useGlobalContext = () => {
