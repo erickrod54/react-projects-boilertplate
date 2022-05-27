@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { API_ENDPOINT } from './context'
+import useFetch from './useFetch'
 
-/**Movie-db app version 2 - 'SingleMovie' Component - Features: 
+/**Movie-db app version 3 - 'SingleMovie' Component - Features: 
  * 
- *      --> Building States.
- *      
- *      --> Building 'fetchMovie' request.
+ *        --> Importing 'useFetch' custom hook.
  * 
- *      --> Building the useEffect to invoke 'fetchMovie'
- *          based in the 'API_ENDPOINT' and 'id'.
+ *      --> Destructuring props 'isLoding', 'error', 
+ *         'data:movie'.
  * 
- *      --> Conditionally rendering 'loding' and 'error' state.
- *  
- *      --> Rendering the props from the 'API'.
+ *      --> Getting as 'urlParams' `&i=${id}`) for
+ *          'useFetch'.
  * 
- * Note: This version is gonna be refactor because 'fetchMovie'
- * and 'fetcMovies' from context js are very similar
+ * Note: This file i format data as 'movie' because id for
+ * a single movie
  * 
  * */
 
@@ -24,30 +21,10 @@ const SingleMovie = () => {
   /**here i build the states */
   const { id } = useParams();
   console.log(id)
-  const [ movie, setMovie ] = useState({});
-  const [ isLoading, setLoading ] = useState(true)
-  const [ error, setError ] = useState({show: false, msg:''});
 
-  /**here i build the fetch request for the movie */
-  const fetchMovie = async (url) => {
-
-    const response = await fetch(url)
-    const data = await response.json();
-    console.log(data)
-
-    if (data.Response === 'False') {
-      setError({show:true, msg: data.Error })
-      setLoading(false)
-    }else{
-      setMovie(data)
-      setLoading(false)
-    }
-  }
-
-  /**Using 'useEffect' i invoke 'fetchMovie' */
-  useEffect(() => {
-    fetchMovie(`${API_ENDPOINT}&i=${id}`)
-  },[id])
+  /**Here i destructure an reformat data > movie */
+  /**i set the 'UrlParams' to get the movie by 'id' */
+  const {isLoading, error, data:movie } = useFetch(`&i=${id}`)
 
   /**Renring conditionallly 'isLoading' and 'error.show'*/
   if (isLoading) {
