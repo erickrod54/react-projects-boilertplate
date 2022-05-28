@@ -1,18 +1,12 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import Home from './Home'
 import Movie from './SingleMovie'
 
-/**Movie-db app version 1 - 'App' js file - Features: 
+/**Movie-db app version 4 - 'App' js file - Features: 
  * 
- *      -->Building 'Routing' feature
- * 
- *      -->Building Route for 'Home' where
- *         all the movies will be located.
- * 
- *      -->Building a 'children' Route for 
- *        a 'Movie' -single movie- Component
+ *      -->Updating Routing to version 6.
  * 
  * Note: This Routing feature is based on 'react-router-dom'
  * version 5 - later i'll update to version 6
@@ -21,12 +15,10 @@ import Movie from './SingleMovie'
 function App() {
   return (
     <>
-      <Switch>
-        <Route path='/' exact>
-          <Home />
-        </Route>
-        <Route path='/movies/:id' children={<Movie />}/>
-      </Switch>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/movies/:id' element={<Movie />}/>
+      </Routes>
     </>
   )
 }
