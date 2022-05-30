@@ -1,25 +1,22 @@
 import React, { useContext, useEffect, useReducer } from 'react'
-/**Hacker-news app version 1 - 'context' js file - Features: 
+/**Hacker-news app version 2 - 'context' js file - Features: 
  * 
- *      --> Building state for the 'reducer' actions.
+ *      -->Building url to fetch data from the API.
+ *  
+ *      -->Using SET_STORIES to handle the getback data
+ *        from the API.
  * 
- *      --> Building 'initialState' with the first 
- *          action 'isLoading'.
+ *      -->Building state with keywords to set a criteria 
+ *         search.
  * 
- *      --> Building 'fetchStories' to made the request
- *          for the API data.
+ * Note: In this version in order to get the data back from
+ * the API i will build the 'url' using this criteria:
  * 
- *      --> Building the 'useEffect' to invoke 'fetchStories'. 
+ *   
+ * -- https://hn.algolia.com/api/v1/search?query=react&page=0
  * 
- *      --> Spreading as 'value' the reducer state.    
- * 
- * Note: the first action that is going to be spread is the
- * 'SET_LOADING'
- * 
- * So this import for the actions variables must be when i'm
- * dispatching the action, this case 'context' and 'Stories'
- * but can be imported and use everywhere where i need it in
- * the app
+ * in order to do so, i start to build the state
+ *  
  * */
 
 import {
@@ -33,8 +30,14 @@ import reducer from './reducer'
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?'
 
+/**i build the state with the props that i'll use as 
+ * values to build the url*/
 const initialState = {
   isLoading:true,
+  hits:[],
+  query:'react',
+  page:0,
+  nbPages:0
 }
 
 const AppContext = React.createContext()
@@ -48,12 +51,26 @@ const AppProvider = ({ children }) => {
    * the 'SET_LOADING' action*/
   const fetchStories = async (url) => {
     dispatch({ type: SET_LOADING})
+
+    try {
+      const response = await fetch(url)
+      const data = await response.json()
+      /**here i dispatch the action 'SET_STORIES' and 
+       * i define the payload taking values from the API data*/
+      dispatch({type:SET_STORIES, 
+        payload:{hits:data.hits, nbPages:data.nbPages}})
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   /**here i use 'useEffect' hook to invoke it */
   useEffect(() => {
-    fetchStories()
+    /**here where i invoke i build it with the state props */
+    fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`)
   },[])
+
   
   /**here in the provider i spread the reducer state as value */
   return <AppContext.Provider value={{...state}}>{children}</AppContext.Provider>
