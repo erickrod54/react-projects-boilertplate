@@ -6,31 +6,40 @@ import {
   HANDLE_SEARCH,
 } from './actions'
 
-/**Hacker-news app version 1 - 'reducer' js file - Features: 
+/**Hacker-news app version 2 - 'reducer' js file - Features: 
  * 
- *      -->Building reducer action 'SET_LOADING'.
+ *      --> Building 'SET_STORIES' action.
  * 
- * Note: In order to build the data flow for the reducer, i can
- * work either with 'if' statements or a 'switch' structure, this
- * for this case i'll use a switch. 
+ * Note: The state is spreaded in order to get the data made
+ * previously in the context js where i triggered the action
+ * SET_STORIES, and here i defines the values as the payload
+ * prop, as previously did in the context js
  * 
- * So this import for the actions variables must be when i'm
- * dispatching the action, this case 'context' and 'Stories'
- * but can be imported and use everywhere where i need it in
- * the app
+ * to verify that the i got the data correctly i'll check on:
+ * 
+ *  JavaConsole > Components > props from the Context>provider.
  * */
 
 /**i pass the current state, and the action before dispatching */
 const reducer = (state, action) => {
 
-  /**the condition for the switch 'action.type' */
+ 
   switch(action.type){
-    /**the case for the first action 'SET_LOADING'*/
-    case SET_LOADING:
-      /**i spread the 'state', and 'isLoading' true*/
+   
+     case SET_LOADING:
+     
       return { ...state, isLoading:true}
+
+      /**here i build 'SET_STORIES' action*/
+      case SET_STORIES:
+      /**i return the state
+       * setloading to false and defining hits and nbPages props
+       * values */  
+      return { ...state, 
+                  isLoading:false, 
+                  hits: action.payload.hits,
+                  nbPages: action.payload.nbPages}
     default:
-      /**just in case i set an error if the API fails */
       throw new Error(`no matching "${action.type}" action type`)
   }
     
