@@ -1,22 +1,14 @@
 import React, { useContext, useEffect, useReducer } from 'react'
-/**Hacker-news app version 2 - 'context' js file - Features: 
+
+/**Hacker-news app version 3 - 'context' js file - Features: 
  * 
- *      -->Building url to fetch data from the API.
- *  
- *      -->Using SET_STORIES to handle the getback data
- *        from the API.
- * 
- *      -->Building state with keywords to set a criteria 
- *         search.
- * 
- * Note: In this version in order to get the data back from
- * the API i will build the 'url' using this criteria:
- * 
- *   
- * -- https://hn.algolia.com/api/v1/search?query=react&page=0
- * 
- * in order to do so, i start to build the state
- *  
+ *      --> Building 'removeStory' feature in order
+ *          to hit and remove a 'story' from the UI.
+ *          
+ * Note: this version has a test targeting the 'id' in order
+ * to check that i am getting the 'id' of each story. is pending
+ * after already verify the targeting 'id' test build the 
+ * 'REMOVE_STORY' feature in reducer in the next version.
  * */
 
 import {
@@ -65,6 +57,11 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  /**here i build 'removeStory' -targeting the 'id' test-*/
+  const removeStory = (id) => {
+    console.log(id)
+  }
+
   /**here i use 'useEffect' hook to invoke it */
   useEffect(() => {
     /**here where i invoke i build it with the state props */
@@ -73,7 +70,7 @@ const AppProvider = ({ children }) => {
 
   
   /**here in the provider i spread the reducer state as value */
-  return <AppContext.Provider value={{...state}}>{children}</AppContext.Provider>
+  return <AppContext.Provider value={{...state, removeStory}}>{children}</AppContext.Provider>
 }
 // make sure use
 export const useGlobalContext = () => {
