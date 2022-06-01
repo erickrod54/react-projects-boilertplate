@@ -1,20 +1,13 @@
 import React from 'react'
 import { useGlobalContext } from './context'
-/**Hacker-news app version 3 - 'Stories' js file - Features: 
+/**Hacker-news app version 4 - 'Stories' js file - Features: 
  * 
- *      --> Destructuring 'hits' from 'useGlobalContext'
- *          to get his props.
- * 
- *      --> Destructuring removeStory to implement removing
- *          'story' from the 'UI' - user interface - WONT 
- *          REMOVE FROM THE API-.
- * 
- *      --> Testing that actually and targeting the 'id'
- *          from each 'story' triggering it by 'onClick'
+ *      --> Fixing 'objectID:id' to 'objectID' in order
+ *          to work directly the API props. 
  * 
  * Note: In this version the goals are displaying the data
  * from the API in a successful manner, and test 'removeStory'
- * targeting the 'id' fromeach 'story'
+ * targeting the 'objectID' from each 'story'
  * */
 
 const Stories = () => {
@@ -29,20 +22,18 @@ const Stories = () => {
     <section className='stories'>
       {hits.map((story) => {
         /**i console log the 'story' to copy the props directly
-         * and avoid typo issues, also i add a friendly alias 
-         * for the id*/
+         * and avoid typo issues*/
         console.log(story)
-        const { objectID: id, 
+        const { objectID, 
                 title, 
                 num_comments, 
                 url, 
                 points, 
                 author } = story;
         return(
-          /**here i place the props for each story - the 'story'
-           * container*/
+          /**here i fix 'id' to 'objectID'*/
           <article 
-          key={id} 
+          key={objectID} 
           className='story'>
             
             <h4 className='title'>{title}</h4>
@@ -61,13 +52,11 @@ const Stories = () => {
                     rel="noopener noreferrer">
                     read more
                   </a>
-                  {/**here i trigger the removeStory with an
-                   * arrow function to trigger it only when i
-                   * click on it, i should see the JavaConsole
-                   * the test targeting the 'id'*/}
+                  {/**here i trigger the removeStory fixing
+                   * to 'objectID'*/}
                   <button 
                     className='remove-btn' 
-                    onClick={() => removeStory(id)}>remove</button>
+                    onClick={() => removeStory(objectID)}>remove</button>
                 </div>
             </article>)
       })}
