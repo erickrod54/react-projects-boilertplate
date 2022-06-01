@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 
-/**Hacker-news app version 3 - 'context' js file - Features: 
+/**Hacker-news app version 4 - 'context' js file - Features: 
  * 
- *      --> Building 'removeStory' feature in order
+ *      --> Building 'removeStory' full feature in order
  *          to hit and remove a 'story' from the UI.
  *          
- * Note: this version has a test targeting the 'id' in order
- * to check that i am getting the 'id' of each story. is pending
- * after already verify the targeting 'id' test build the 
- * 'REMOVE_STORY' feature in reducer in the next version.
+ * Note: this version has a full implementation of the
+ * 'removeStory' feature.
  * */
 
 import {
@@ -57,9 +55,10 @@ const AppProvider = ({ children }) => {
     }
   }
 
-  /**here i build 'removeStory' -targeting the 'id' test-*/
+  /**here i build 'removeStory' dispatching the action, and
+   * giving the 'id' as payload */
   const removeStory = (id) => {
-    console.log(id)
+    dispatch({type:REMOVE_STORY, payload:id })
   }
 
   /**here i use 'useEffect' hook to invoke it */
