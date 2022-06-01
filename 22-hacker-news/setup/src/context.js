@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 
-/**Hacker-news app version 4 - 'context' js file - Features: 
+/**Hacker-news app version 5 - 'context' js file - Features: 
  * 
- *      --> Building 'removeStory' full feature in order
- *          to hit and remove a 'story' from the UI.
+ *      --> Dispatching to the provider and building 
+ *          handleSearch action.
  *          
  * Note: this version has a full implementation of the
  * 'removeStory' feature.
@@ -61,6 +61,12 @@ const AppProvider = ({ children }) => {
     dispatch({type:REMOVE_STORY, payload:id })
   }
 
+  /**here i build 'handleSearch' targeting 'query' prop*/
+  const handleSearch = (query) => {
+    /**here i dispattch it */
+      dispatch({ type: HANDLE_SEARCH, payload: query })
+  }
+
   /**here i use 'useEffect' hook to invoke it */
   useEffect(() => {
     /**here where i invoke i build it with the state props */
@@ -68,8 +74,9 @@ const AppProvider = ({ children }) => {
   },[])
 
   
-  /**here in the provider i spread the reducer state as value */
-  return <AppContext.Provider value={{...state, removeStory}}>{children}</AppContext.Provider>
+  /**here in the provider i spread the reducer state as value, 
+   * and provide handleSearch action*/
+  return <AppContext.Provider value={{...state, removeStory, handleSearch}}>{children}</AppContext.Provider>
 }
 // make sure use
 export const useGlobalContext = () => {
