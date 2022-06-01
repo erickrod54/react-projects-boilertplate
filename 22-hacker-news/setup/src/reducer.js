@@ -6,18 +6,13 @@ import {
   HANDLE_SEARCH,
 } from './actions'
 
-/**Hacker-news app version 2 - 'reducer' js file - Features: 
+/**Hacker-news app version 4 - 'reducer' js file - Features: 
  * 
- *      --> Building 'SET_STORIES' action.
+ *      --> Building 'REMOVE_STORY' action.
  * 
- * Note: The state is spreaded in order to get the data made
- * previously in the context js where i triggered the action
- * SET_STORIES, and here i defines the values as the payload
- * prop, as previously did in the context js
+ * Note: This action has been dispatched in context js and
+ * provided to Story where is been set.
  * 
- * to verify that the i got the data correctly i'll check on:
- * 
- *  JavaConsole > Components > props from the Context>provider.
  * */
 
 /**i pass the current state, and the action before dispatching */
@@ -38,7 +33,15 @@ const reducer = (state, action) => {
       return { ...state, 
                   isLoading:false, 
                   hits: action.payload.hits,
-                  nbPages: action.payload.nbPages}
+                  nbPages: action.payload.nbPages
+                }
+        case REMOVE_STORY:
+        /**i return the whole state, but from hits i create
+         * a new array with the 'objectID' that doesn't match
+         * with my payload -'id' triggered by the user-
+         */
+        return {...state, hits:state.hits.
+          filter((story) => story.objectID !== action.payload )}
     default:
       throw new Error(`no matching "${action.type}" action type`)
   }
