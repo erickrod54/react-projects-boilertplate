@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 
-/**Hacker-news app version 6 - 'context' js file - Features: 
+/**Hacker-news app version 7 - 'context' js file - Features: 
  * 
- *      --> Setting dependency array of 'fetchStories' as
- *          'state.query' i order to acomplish the search.
+ *      --> Building 'handlePage' feature in order to 
+ *          create a navigation with 'Buttons'
  *          
  * Note: this version has a full implementation of the
  * 'removeStory' feature.
@@ -67,6 +67,11 @@ const AppProvider = ({ children }) => {
       dispatch({ type: HANDLE_SEARCH, payload: query })
   }
 
+  const handlePage = (value) => {
+    console.log(value)
+    //dispatch
+  }
+
   /**here i use 'useEffect' hook to invoke it */
   useEffect(() => {
     /**here where i invoke i build it with the state props */
@@ -76,7 +81,7 @@ const AppProvider = ({ children }) => {
   
   /**here in the provider i spread the reducer state as value, 
    * and provide handleSearch action*/
-  return <AppContext.Provider value={{...state, removeStory, handleSearch}}>{children}</AppContext.Provider>
+  return <AppContext.Provider value={{...state, removeStory, handleSearch, handlePage}}>{children}</AppContext.Provider>
 }
 // make sure use
 export const useGlobalContext = () => {
