@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 
-/**Hacker-news app version 5 - 'context' js file - Features: 
+/**Hacker-news app version 6 - 'context' js file - Features: 
  * 
- *      --> Dispatching to the provider and building 
- *          handleSearch action.
+ *      --> Setting dependency array of 'fetchStories' as
+ *          'state.query' i order to acomplish the search.
  *          
  * Note: this version has a full implementation of the
  * 'removeStory' feature.
@@ -71,7 +71,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     /**here where i invoke i build it with the state props */
     fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`)
-  },[])
+  },[state.query])
 
   
   /**here in the provider i spread the reducer state as value, 
