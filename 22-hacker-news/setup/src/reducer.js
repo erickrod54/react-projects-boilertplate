@@ -6,9 +6,9 @@ import {
   HANDLE_SEARCH,
 } from './actions'
 
-/**Hacker-news app version 4 - 'reducer' js file - Features: 
+/**Hacker-news app version 5 - 'reducer' js file - Features: 
  * 
- *      --> Building 'REMOVE_STORY' action.
+ *      --> Building 'HANDLE_SEARCH' action.
  * 
  * Note: This action has been dispatched in context js and
  * provided to Story where is been set.
@@ -41,7 +41,12 @@ const reducer = (state, action) => {
          * with my payload -'id' triggered by the user-
          */
         return {...state, hits:state.hits.
-          filter((story) => story.objectID !== action.payload )}
+          filter((story) => story.objectID !== action.payload )
+        }
+
+        case HANDLE_SEARCH:
+        /**here i build HANDLE_SEARCH action */  
+          return { ...state, query: action.payload, page: 0 }
     default:
       throw new Error(`no matching "${action.type}" action type`)
   }
