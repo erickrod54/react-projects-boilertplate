@@ -6,9 +6,9 @@ import {
   HANDLE_SEARCH,
 } from './actions'
 
-/**Hacker-news app version 5 - 'reducer' js file - Features: 
+/**Hacker-news app version 8 - 'reducer' js file - Features: 
  * 
- *      --> Building 'HANDLE_SEARCH' action.
+ *      --> Building 'HANDLE_PAGE' action.
  * 
  * Note: This action has been dispatched in context js and
  * provided to Story where is been set.
@@ -47,6 +47,24 @@ const reducer = (state, action) => {
         case HANDLE_SEARCH:
         /**here i build HANDLE_SEARCH action */  
           return { ...state, query: action.payload, page: 0 }
+
+        case HANDLE_PAGE:
+          if (action.payload === 'inc') {
+            let nextPage = state.page + 1;
+            if (nextPage > state.nbPages - 1) {
+              nextPage = 0;
+            }
+            return {...state, page: nextPage}
+          }
+
+          if (action.payload === 'dec') {
+            let prevPage = state.page - 1;
+            if (prevPage < 0 ) {
+              prevPage = state.nbPages - 1;
+            }
+            return {...state, page: prevPage}
+          }
+          
     default:
       throw new Error(`no matching "${action.type}" action type`)
   }
