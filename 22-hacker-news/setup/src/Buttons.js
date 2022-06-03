@@ -1,9 +1,9 @@
 import React from 'react'
 import { useGlobalContext } from './context'
 
-/**Hacker-news app version 7 - 'Buttons' Component - Features: 
+/**Hacker-news app version 8 - 'Buttons' Component - Features: 
  * 
- *      -->Building 'prev' and 'next' button.
+ *      -->Building pagination for stories.
  *          
  * Note: the references for the styles in the global stylesheet
  * 
@@ -24,7 +24,7 @@ const Buttons = () => {
           prev
         </button>
 
-        <p>some values</p>
+         <p>{page + 1} of {nbPages}</p>
 
         {/**this is the 'Next' button */}  
         <button 
