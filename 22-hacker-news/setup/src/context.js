@@ -1,9 +1,13 @@
 import React, { useContext, useEffect, useReducer } from 'react'
 
-/**Hacker-news app version 7 - 'context' js file - Features: 
+/**Hacker-news app version 8 - 'context' js file - Features: 
  * 
- *      --> Building 'handlePage' feature in order to 
- *          create a navigation with 'Buttons'
+ *      --> Dispatching 'HANDLE_PAGE' action 'handlePage' 
+ *          feature in order to create a navigation with 
+ *          'Buttons'
+ * 
+ *      --> Setting 'state.page' also as dependency array
+ *          to fetch 'stories'
  *          
  * Note: this version has a full implementation of the
  * 'removeStory' feature.
@@ -67,16 +71,17 @@ const AppProvider = ({ children }) => {
       dispatch({ type: HANDLE_SEARCH, payload: query })
   }
 
+  /**here i build 'handlePage' feature for the 
+   * navigation -value is increase or decrease value-*/
   const handlePage = (value) => {
-    console.log(value)
-    //dispatch
+    dispatch({ type: HANDLE_PAGE, payload: value})
   }
 
   /**here i use 'useEffect' hook to invoke it */
   useEffect(() => {
     /**here where i invoke i build it with the state props */
     fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`)
-  },[state.query])
+  },[state.query, state.page])
 
   
   /**here in the provider i spread the reducer state as value, 
