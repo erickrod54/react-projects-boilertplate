@@ -3,10 +3,9 @@ import SearchForm from './SearchForm'
 import Stories from './Stories'
 import Buttons from './Buttons'
 
-/**Hacker-news app version 1 - 'App' js file - Features: 
+/**Hacker-news app version 8 - 'App' js file - Features: 
  * 
- *      -->Importing and Placing 'SearchForm', 'Stories' and
- *         'Buttons' Components.
+ *      -->Placing Buttons Component up and down to stories.
  * 
  * Note: 
  * 
@@ -32,6 +31,7 @@ function App() {
   return(
     <>
       <SearchForm />
+      <Buttons />
       <Stories />
       <Buttons />
     </>
