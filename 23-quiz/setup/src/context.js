@@ -1,13 +1,17 @@
 import axios from 'axios'
 import React, { useState, useContext, useEffect } from 'react'
 
-/**Quiz app version 2 - 'context' js file - Features: 
+/**Quiz app version 3 - 'context' js file - Features: 
  * 
- *      -->Building 'nextQuestion' functionality.
+ *      -->Building 'checkAnswers' feature to increase
+ *        the counter based in a 'true' - 'false'
+ *        statement.
  * 
- * Note: the request is made using 'axios' library
- * in order to friendly handle the API concerns
+ *      -->Providing 'checkAnswers' to use in 'App' js.      
  * 
+ * Note: This 'checkAnswers' feature will be link to
+ * another statement based in the API data and the 
+ * 'answer' checked by the user.
  * */
 
 const table = {
@@ -90,6 +94,17 @@ const AppProvider = ({ children }) => {
     })
   }
 
+  /**here i build the functionality to increase the 
+   * counter based on correct answers*/
+  const checkAnswer = value => {
+    if (value) {
+      /**i 'setCorrect' with the counter i get 'true'*/
+      setCorrect((oldState) => oldState + 1 )
+    }
+    /**if value is 'false' triggers next question*/
+    nextQuestion()
+  }
+
   /**here i invoke 'fetchQuestions' passing throught the 
    * 'tempUrl' */
   useEffect(() => {
@@ -106,7 +121,8 @@ const AppProvider = ({ children }) => {
               correct,
               error,
               isModalOpen,
-              nextQuestion
+              nextQuestion,
+              checkAnswer
             }}>{children}</AppContext.Provider>
 }
 // make sure use
