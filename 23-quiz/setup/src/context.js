@@ -1,15 +1,9 @@
 import axios from 'axios'
 import React, { useState, useContext, useEffect } from 'react'
 
-/**Quiz app version 1 - 'context' js file - Features: 
+/**Quiz app version 2 - 'context' js file - Features: 
  * 
- *      -->Building the states for the Quiz app.
- * 
- *      -->Building 'fetchQuestions' to get the data
- *         back from the API.
- * 
- *      -->Building 'useEffect' in order to invoke
- *         the fetch request.
+ *      -->Building 'nextQuestion' functionality.
  * 
  * Note: the request is made using 'axios' library
  * in order to friendly handle the API concerns
@@ -75,6 +69,27 @@ const AppProvider = ({ children }) => {
     }
   }
 
+  const nextQuestion = () => {
+    setIndex((oldIndex) => {
+      /**'oldIndex' is the current index plus '1'*/
+      const index = oldIndex + 1;
+
+      /**this condition is to prevent the error when i
+       * ran out of 'indexes' */
+      if (index > questions.length - 1) {
+        /**i'll uncomment once a build the 'openModaal' 
+         * feature*/
+
+        // openModal()
+        //i'll return '0' to take me to the first element
+        //and avoid the error 
+        return 0;
+      }else{
+        return index;
+      }
+    })
+  }
+
   /**here i invoke 'fetchQuestions' passing throught the 
    * 'tempUrl' */
   useEffect(() => {
@@ -90,7 +105,8 @@ const AppProvider = ({ children }) => {
               index,
               correct,
               error,
-              isModalOpen
+              isModalOpen,
+              nextQuestion
             }}>{children}</AppContext.Provider>
 }
 // make sure use
