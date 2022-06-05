@@ -5,32 +5,18 @@ import SetupForm from './SetupForm'
 import Loading from './Loading'
 import Modal from './Modal'
 
-/**Quiz app version 2 - 'App' js file - Features: 
+/**Quiz app version 3 - 'App' js file - Features: 
  * 
- *      -->Accessing to the 'question' object from the API.
+ *      -->Destructuring 'checkAnswers' to triggering
+ *         on the 'answers' map.
  * 
- *      -->Destructuring props from the question and setting
- *         'index' prop in order to map them dinamicly.
+ *      -->Implementing 'checkAnswers' based in a 
+ *        'correct_answer === answer' statement.
  * 
- *      -->Building 'answers' array to spread props and 
- *         mapping answers to render it.
- * 
- *      -->Implementing 'dangerouslySetInnerHTML' to render
- *        in the UI as string 'question' and 'answers' -they
- *        are in html format in the API-
- * 
- *      -->Destructuring 'nextQuestion' feature and triggering
- *        'onClick' for 'next question' button.
- * 
- * Note: this version will keep the basic setup for
- * the quiz app.
- * 
- * i implement the att 'dangerouslySetInnerHTML', because the 
- * question is not in 'string' format so is in html, so the 
- * att render everything as a string -i have to be aware this 
- * att is usually use to inject malicious code, this case i'm 
- * using to handle API request, but must not place by
- * the user side- for use only with self-closed tag
+ * Note: The statement 'correct_answer === answer' inside
+ * of 'checkAnswers' triggers the counter increase based
+ * if the 'answer' -select by the user- matches with 
+ * 'correct_answer' - data from the API-
  * 
  * */
 
@@ -41,7 +27,8 @@ function App() {
           questions, 
           index, 
           correct,
-         nextQuestion } = useGlobalContext();
+         nextQuestion,
+         checkAnswer } = useGlobalContext();
 
   if (waiting) {
     return <SetupForm />
@@ -82,10 +69,13 @@ function App() {
           <h2 dangerouslySetInnerHTML={{__html: question}}/>
           <div className='btn-container'>
             {answers.map((answer, index) => {
-              return <button 
+              /**in the map trigger 'checkAnswer' */
+              return(
+                  <button 
                   key={index} 
                   className='answer-btn' 
-                  dangerouslySetInnerHTML={{__html: answer}}/>
+                  onClick={() => checkAnswer(correct_answer === answer) }
+                  dangerouslySetInnerHTML={{__html: answer}}/>)
             })}
           </div>
           <button className='next-question' onClick={nextQuestion}>
