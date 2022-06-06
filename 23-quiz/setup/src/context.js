@@ -1,17 +1,17 @@
 import axios from 'axios'
 import React, { useState, useContext, useEffect } from 'react'
 
-/**Quiz app version 3 - 'context' js file - Features: 
+/**Quiz app version 4 - 'context' js file - Features: 
  * 
- *      -->Building 'checkAnswers' feature to increase
- *        the counter based in a 'true' - 'false'
- *        statement.
+ *      --> Building 'openModal' feature.
+ *  
+ *      --> Building 'closeModal' feature.
  * 
- *      -->Providing 'checkAnswers' to use in 'App' js.      
+ *      --> Uncommenting 'openModal' invoke on
+ *          'nextQuestion' code.      
  * 
- * Note: This 'checkAnswers' feature will be link to
- * another statement based in the API data and the 
- * 'answer' checked by the user.
+ * Note: The 'openModal' invoke will be trigger at the end
+ * of the array course.
  * */
 
 const table = {
@@ -78,15 +78,9 @@ const AppProvider = ({ children }) => {
       /**'oldIndex' is the current index plus '1'*/
       const index = oldIndex + 1;
 
-      /**this condition is to prevent the error when i
-       * ran out of 'indexes' */
       if (index > questions.length - 1) {
-        /**i'll uncomment once a build the 'openModaal' 
-         * feature*/
-
-        // openModal()
-        //i'll return '0' to take me to the first element
-        //and avoid the error 
+        /**here i uncomment openModal */
+        openModal()
         return 0;
       }else{
         return index;
@@ -103,6 +97,18 @@ const AppProvider = ({ children }) => {
     }
     /**if value is 'false' triggers next question*/
     nextQuestion()
+  }
+
+  /**Here i build 'openModal' to trigger the modal*/
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
+  /**Here i build 'closeModal' to close the modal*/
+  const closeModal = () => {
+    setWaiting(true)
+    setCorrect(0)
+    setIsModalOpen(false)
   }
 
   /**here i invoke 'fetchQuestions' passing throught the 
@@ -122,7 +128,8 @@ const AppProvider = ({ children }) => {
               error,
               isModalOpen,
               nextQuestion,
-              checkAnswer
+              checkAnswer,
+              closeModal
             }}>{children}</AppContext.Provider>
 }
 // make sure use
