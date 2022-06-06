@@ -1,17 +1,21 @@
 import axios from 'axios'
 import React, { useState, useContext, useEffect } from 'react'
 
-/**Quiz app version 4 - 'context' js file - Features: 
+/**Quiz app version 5 - 'context' js file - Features: 
  * 
- *      --> Building 'openModal' feature.
- *  
- *      --> Building 'closeModal' feature.
+ *      --> Building 'quiz' state in order to start to 
+ *          work on 'SetupForm'.
  * 
- *      --> Uncommenting 'openModal' invoke on
- *          'nextQuestion' code.      
+ *      --> Building 'handleSubmit' feature.
  * 
- * Note: The 'openModal' invoke will be trigger at the end
- * of the array course.
+ *      --> Building 'handleChange' feature.
+ * 
+ *      --> Providing features and state throught the
+ *          Provider.       
+ * 
+ * Note: Extremily important 'quiz' state is build with an
+ * 'object key' value, so vales must match with the API in
+ * order to get the data right later
  * */
 
 const table = {
@@ -43,6 +47,13 @@ const AppProvider = ({ children }) => {
   const [ error, setError ] = useState(false)
   /**this is the state for modal to show results */
   const [ isModalOpen, setIsModalOpen ] = useState(false)
+  /**this is the state for 'quiz' handle 'SetupForm'
+   * features*/
+
+  const [ quiz, setQuiz ] = useState({ 
+    amount: 10, 
+    category: 'sports', 
+    difficulty:'easy' })
 
   /**here i build the fetchQuestions -for now
    * i target 'url' that in this version is empty, i'll use
@@ -111,11 +122,14 @@ const AppProvider = ({ children }) => {
     setIsModalOpen(false)
   }
 
-  /**here i invoke 'fetchQuestions' passing throught the 
-   * 'tempUrl' */
-  useEffect(() => {
-    fetchQuestions(tempUrl)
-  }, [])
+const handleChange = (e) => {
+  console.log(e);
+}
+
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+}
 
 
   return <AppContext.Provider 
@@ -129,7 +143,10 @@ const AppProvider = ({ children }) => {
               isModalOpen,
               nextQuestion,
               checkAnswer,
-              closeModal
+              closeModal,
+              quiz,
+              handleChange,
+              handleSubmit
             }}>{children}</AppContext.Provider>
 }
 // make sure use
