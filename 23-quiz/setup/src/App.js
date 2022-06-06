@@ -5,18 +5,13 @@ import SetupForm from './SetupForm'
 import Loading from './Loading'
 import Modal from './Modal'
 
-/**Quiz app version 3 - 'App' js file - Features: 
+/**Quiz app version 4 - 'App' js file - Features: 
  * 
- *      -->Destructuring 'checkAnswers' to triggering
- *         on the 'answers' map.
+ *     --> Uncommenting 'Modal' Component to
+ *         start adding the data. 
  * 
- *      -->Implementing 'checkAnswers' based in a 
- *        'correct_answer === answer' statement.
- * 
- * Note: The statement 'correct_answer === answer' inside
- * of 'checkAnswers' triggers the counter increase based
- * if the 'answer' -select by the user- matches with 
- * 'correct_answer' - data from the API-
+ * Note: this component was commented on previous versions
+ * for previous development porpouses.
  * 
  * */
 
@@ -52,7 +47,7 @@ function App() {
 
   return(
     <main>
-      {/**<Modal /> */}
+      <Modal />
       <section className='quiz'>
         <p className='correct-answers'>
           correct answers : {correct} / {index}
