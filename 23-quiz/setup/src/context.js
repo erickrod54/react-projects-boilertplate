@@ -1,21 +1,18 @@
 import axios from 'axios'
 import React, { useState, useContext, useEffect } from 'react'
 
-/**Quiz app version 5 - 'context' js file - Features: 
+/**Quiz app version 6 - 'context' js file - Features: 
  * 
- *      --> Building 'quiz' state in order to start to 
- *          work on 'SetupForm'.
  * 
- *      --> Building 'handleSubmit' feature.
+ *      --> Building 'handleChange' full feature.
  * 
- *      --> Building 'handleChange' feature.
+ *     
  * 
- *      --> Providing features and state throught the
- *          Provider.       
- * 
- * Note: Extremily important 'quiz' state is build with an
- * 'object key' value, so vales must match with the API in
- * order to get the data right later
+ * Note: this full feature will target by 'name' each input
+ * from 'SetupForm' with his value -can be number of questions
+ * category and difficulty - and using 'SetQuiz' as an object
+ * key values i can make a 'controlled input' because i'll
+ * now that the values i'll get will be those three
  * */
 
 const table = {
@@ -123,7 +120,23 @@ const AppProvider = ({ children }) => {
   }
 
 const handleChange = (e) => {
-  console.log(e);
+  const name = e.target.name;
+  const value = e.target.value;
+
+  /**As 'handleChange' functionality gets multiple values
+   * as 'number of questions', 'category', and 'difficulty'
+   * all of these dinamicly because i'm target them above
+   * using the att 'name' of each input -setQuiz as 'key 
+   * object' is to handle the changes more easy-  
+  */
+  console.log('name selected ==>', name, ', value in it ==>', value)
+
+  /**checking out on Components i can verify
+   * how values change dinamicly*/
+
+  /**i spread first, and then name with 
+   * the value selected */
+  setQuiz({ ...quiz, [name]: value})
 }
 
 
