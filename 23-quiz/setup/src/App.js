@@ -5,14 +5,14 @@ import SetupForm from './SetupForm'
 import Loading from './Loading'
 import Modal from './Modal'
 
-/**Quiz app version 4 - 'App' js file - Features: 
+/**Quiz app version 7 - 'App' js file - Features: 
  * 
- *     --> Uncommenting 'Modal' Component to
- *         start adding the data. 
+ *     --> Building a random 'temIndex' to relocate
+ *         randomly the 'correct_answer'.  
  * 
- * Note: this component was commented on previous versions
- * for previous development porpouses.
- * 
+ * Note: In this version i use the method push
+ * to add 'correct_answer' ramdonly to the 'answers'
+ * array where the 'incorrect_answers' are.
  * */
 
 function App() {
@@ -41,10 +41,28 @@ function App() {
           incorrect_answers, 
           correct_answer } = questions[index] 
 
-  /**here i spread the props that i need from a 
-  * single question for answers - to map - API side*/
-  const answers = [...incorrect_answers, correct_answer]
+  //this line always put the 'correct_answer' at last
+  //const answers = [...incorrect_answers, correct_answer]
 
+  /**the 'answers' array is gonna be random*/
+  let answers = [...incorrect_answers]
+
+  /**this will generate a ramdom value for an 'index'
+   * between '0 and 3'*/
+  const tempIndex = Math.floor(Math.random() * 4)
+  console.log('tempIndex ==> ',tempIndex)
+
+  /**only if is '3' i push at last*/
+  if (tempIndex === 3 ) {
+    answers.push(correct_answer)
+  }else{
+    /**the rest of chances i push the 'answers'
+     * array using random index*/
+    answers.push(answers[tempIndex])
+    /**and then i asign the correct_answer to
+     * the index that left, after the random push*/
+    answers[tempIndex] = correct_answer
+  }
   return(
     <main>
       <Modal />
