@@ -1,10 +1,10 @@
 import axios from 'axios'
 import React, { useState, useContext, useEffect } from 'react'
 
-/**Quiz app version 6 - 'context' js file - Features: 
+/**Quiz app version 7 - 'context' js file - Features: 
  * 
  * 
- *      --> Building 'handleChange' full feature.
+ *      --> Building 'handleSubmit' full feature.
  * 
  *     
  * 
@@ -142,6 +142,18 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
   e.preventDefault();
+
+  /**i destructure the values to use them to
+   * build the 'url'*/
+  const { amount, category, difficulty } = quiz;
+
+  /**i take as reference the 'tempUrl' to build
+   * this one, i'm gonna use it to once setup is 
+   * done get the API data back*/
+  const url = `${API_ENDPOINT}amount=${amount}&category=${table[category]}&${difficulty}&type=multiple`
+
+  /**i fetch the 'url' that i build*/
+  fetchQuestions(url)
 }
 
 
